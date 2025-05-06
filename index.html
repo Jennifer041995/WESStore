@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WES Store - Tienda de Tecnología</title>
+    <link rel="icon" href="media/img/icono.png" type="image/x-icon">
+    <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="resources/sweetalert/sweetalert2.min.css">
+    <link rel="stylesheet" href="resources/bootstrap/css/styles.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="#"
+                    width="30" height="30"
+                    class="d-inline-block align-top mr-2"
+                    alt="Logo WES Store">
+                WES Store
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-home"></i> Inicio
+                            <samp class="badge badge-light"></samp>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-shopping-bag"></i> Productos
+                            <samp class="badge badge-light"></samp>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-shopping-cart"></i> Carrito
+                            <span class="badge badge-light" id="cartCount">0</span>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <div class="ms-4">
+                        <div class="input-group search-box">
+                            <input type="text" class="form-control" placeholder="Buscar productos...">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-user"></i> Iniciar Sesión
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-user-plus"></i> Registrarse
+                        </a>
+                    </li>
+                </ul>
+            </div> 
+        </div>
+    </nav>
+
+    <!-- Pie de página -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <!-- ... tu contenido de footer ... -->
+            </div>
+            <hr class="bg-light">
+            <div class="row">
+                <div class="col-md-6">&copy; 2025 WES Store. Todos los derechos reservados.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="resources/jquery/jquery.min.js"></script>
+    <script src="resources/popper/popper.min.js"></script>
+    <script src="resources/bootstrap/js/bootstrap.min.js"></script>
+    <script src="resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="resources/sweetalert/sweetalert2.all.min.js"></script>
+    
+</body>
+</html>
