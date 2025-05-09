@@ -9,86 +9,56 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="resources/sweetalert/sweetalert2.min.css">
     <link rel="stylesheet" href="resources/bootstrap/css/styles.css">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+        }
+    
+        footer {
+            grid-row: auto;
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+      </style>
 </head>
 <body>
-    <!-- Barra de navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="#">
-                <img src="#"
-                    width="30" height="30"
-                    class="d-inline-block align-top mr-2"
-                    alt="Logo WES Store">
-                WES Store
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-home"></i> Inicio
-                            <samp class="badge badge-light"></samp>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-shopping-bag"></i> Productos
-                            <samp class="badge badge-light"></samp>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-shopping-cart"></i> Carrito
-                            <span class="badge badge-light" id="cartCount">0</span>
-                        </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    <div class="ms-4">
-                        <div class="input-group search-box">
-                            <input type="text" class="form-control" placeholder="Buscar productos...">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-user"></i> Iniciar Sesión
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-user-plus"></i> Registrarse
-                        </a>
-                    </li>
-                </ul>
-            </div> 
-        </div>
-    </nav>
+    <!-- Header dinámico -->
+    <div id="header"></div>
 
-    <!-- Pie de página -->
-    <footer class="bg-dark text-white py-5">
-        <div class="container">
-            <div class="row">
-                <!-- ... tu contenido de footer ... -->
-            </div>
-            <hr class="bg-light">
-            <div class="row">
-                <div class="col-md-6">&copy; 2025 WES Store. Todos los derechos reservados.</div>
-            </div>
-        </div>
-    </footer>
+    <!-- Contenido principal -->
+    <div class="container mt-5" id="mainContent">
+        <!-- Carousel dinámico -->
+        <div id="carouselContainer"></div>
+    </div>
 
+    <!-- Footer dinámico -->
+    <div id="footer"></div>
+
+    <!-- Scripts -->
     <script src="resources/jquery/jquery.min.js"></script>
     <script src="resources/popper/popper.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="resources/sweetalert/sweetalert2.all.min.js"></script>
-    
+
+    <!-- Controladores para cargar módulos dinámicos -->
+    <script>
+        // Función genérica para cargar un fragmento HTML
+        function loadModule(containerId, url) {
+            $('#' + containerId).load(url);
+        }
+
+        $(document).ready(function() {
+            // Cargar módulos parciales
+            loadModule('header', 'app/views/partials/header.html');
+            loadModule('footer', 'app/views/partials/footer.html');
+            loadModule('carouselContainer', 'app/views/partials/carousel.html');
+        });
+    </script>
 </body>
 </html>
