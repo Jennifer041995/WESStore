@@ -34,6 +34,19 @@
     <div class="container mt-5" id="mainContent">
         <!-- Carousel dinámico -->
         <div id="carouselContainer"></div>
+
+        <!-- Sección de Categorias -->
+        <div class="row" id="categoriasSection"></div>
+
+        <!-- Sección de productos destacados -->
+        <div class="row mt-5" id="productos_destacadosSection"></div>
+
+        <!-- Sección de Marcas -->
+        <div id="marcasSection"></div>
+
+
+        <!-- Características destacadas -->
+        <section class="row mb-5" id="caracteristicasSection"></section>
     </div>
 
     <!-- Footer dinámico -->
@@ -58,6 +71,14 @@
             loadModule('header', 'app/views/partials/header.html');
             loadModule('footer', 'app/views/partials/footer.html');
             loadModule('carouselContainer', 'app/views/partials/carousel.html');
+            loadModule('categoriasSection', 'app/views/public/categorias.html');
+            loadModule('productos_destacadosSection', 'app/views/public/productos_destacados.html');
+            loadModule('marcasSection', 'app/views/public/marcas.html');
+            loadModule('caracteristicasSection', 'app/views/partials/caracteristicas.html');
+
+            $.getScript('app/controllers/public/list_categorias.js');
+            $.getScript('app/controllers/public/list_productos.js');
+            $.getScript('app/controllers/public/list_marcas.js');
         });
     </script>
 </body>
