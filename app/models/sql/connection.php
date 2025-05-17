@@ -1,6 +1,4 @@
 <?php
-// app/models/sql/connection.php
-
 function getConnection() {
     $host = 'localhost';
     $db   = 'wes_store_db';

@@ -112,3 +112,92 @@ body {
         margin-bottom: 20px;
     }
 }
+
+.featured-products {
+    position: relative; /* Necesario para el posicionamiento */
+    width: 100%;
+}
+
+.inner-products {
+    position: relative;
+    left: 0;
+}
+
+.product-item {
+    display: inline-block;
+    vertical-align: top;
+    transition: none; /* Importante para evitar saltos */
+}
+
+/* Ajustes para las cards */
+.card {
+    width: 100%;       /* Ocupa todo el ancho del contenedor padre */
+    max-width: 200px;  /* Ancho máximo (ajústalo según tus necesidades) */
+    margin: 0 auto;    /* Centra la card si es necesario */
+    word-wrap: break-word; /* Rompe palabras largas */
+}
+
+.card-title, .card-text {
+    white-space: normal; /* Permite saltos de línea */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Muestra "..." si el texto es muy largo */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Máximo 2 líneas (ajusta el número) */
+    line-clamp: 2; /* Propiedad estándar para compatibilidad */
+    -webkit-box-orient: vertical;
+}
+
+/* Contenedor de cada producto */
+.product-item {
+    display: inline-block;
+    width: 200px;      /* Mismo ancho que la card */
+    padding: 0 10px;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+#category-section {
+    width: 100%;
+    background: #020070; /* Fondo opcional */
+}
+
+.inner-categories {
+    position: relative;
+    left: 0;
+
+}
+
+.category-item {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.card {
+    background: #ebe8e8; /* Color de fondo opcional */
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05); /* Efecto hover opcional */
+}
+
+#brands-section {
+    background: #adacac; /* Fondo opcional */
+}
+
+.inner-brands {
+    position: relative;
+    left: 0;
+    transition: left 0.1s linear; /* Para suavizar en navegadores que lo soportan */
+}
+
+.brand-item {
+    transition: transform 0.3s;
+}
+
+.brand-item:hover .card {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Efecto hover */
+}
