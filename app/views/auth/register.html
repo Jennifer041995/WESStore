@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - WES Store</title>
+    <link rel="stylesheet" href="../../../resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../resources/sweetalert/sweetalert2.min.css">
+    <link rel="stylesheet" href="../../../resources/bootstrap/css/styles.css">
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+        }
+
+        footer {
+            grid-row: auto;
+            background: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+        <a class="navbar-brand" href="../../../index.html">
+            <img src="../../../media/img/logo.png" alt="Logo WES Store" class="logo" style="height: 40px; width: auto; margin-right: 10px;">
+            WES Store
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="../../../index.html">Inicio</a></li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+    <div class="jumbotron">
+        <h2 class="mb-4">Crea tu cuenta</h2>
+        <form id="registerForm" novalidate>
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Registrarse</button>
+          <a href="login.html" class="btn btn-link">¿Ya tienes cuenta? Inicia sesión</a>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+      <div class="container text-center">
+        <p>&copy; 2025 WES Store. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+    <script src="../../../resources/jquery/jquery.min.js"></script>
+    <script src="../../../resources/popper/popper.min.js"></script>
+    <script src="../../../resources/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../resources/sweetalert/sweetalert2.all.min.js"></script>
+    <script src="../../controllers/auth/authController.js"></script>
+</body>
+</html>
