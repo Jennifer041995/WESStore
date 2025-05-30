@@ -1,0 +1,233 @@
+<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/sweetalert/sweetalert2.min.css">
+
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Menú lateral -->
+        <div class="col-md-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <div class="avatar-container position-relative">
+                        <img src="media/img/avatares/avatar.png" 
+                             class="img-fluid rounded-circle mb-3 border" 
+                             alt="Avatar del usuario"
+                             style="width: 150px; height: 150px; object-fit: cover;">
+                        <button class="btn btn-sm btn-light avatar-edit-btn">
+                            <i class="fas fa-camera"></i>
+                        </button>
+                    </div>
+                    <h4 id="nombre-usuario" class="font-weight-bold mb-1">Cargando...</h4>
+                    <p class="text-muted mb-0" id="email-usuario"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="col-md-9">
+            <!-- Navegación por pestañas -->
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" 
+                       id="nav-info-tab" 
+                       data-toggle="tab" 
+                       href="#nav-info" 
+                       role="tab" 
+                       aria-controls="nav-info" 
+                       aria-selected="true">
+                        <i class="fas fa-user-circle mr-2"></i>Información
+                    </a>
+                    <a class="nav-item nav-link" 
+                       id="nav-direcciones-tab" 
+                       data-toggle="tab" 
+                       href="#nav-direcciones" 
+                       role="tab" 
+                       aria-controls="nav-direcciones" 
+                       aria-selected="false">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Direcciones
+                    </a>
+                    <a class="nav-item nav-link" 
+                       id="nav-pedidos-tab" 
+                       data-toggle="tab" 
+                       href="#nav-pedidos" 
+                       role="tab" 
+                       aria-controls="nav-pedidos" 
+                       aria-selected="false">
+                        <i class="fas fa-shopping-bag mr-2"></i>Pedidos
+                    </a>
+                </div>
+            </nav>
+
+            <!-- Contenido de las pestañas -->
+            <div class="tab-content mt-3" id="nav-tabContent">
+                <!-- Pestaña Información Personal -->
+                <div class="tab-pane fade show active" id="nav-info" role="tabpanel" aria-labelledby="nav-info-tab">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <form id="form-info-personal">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nombre" class="font-weight-bold">Nombre</label>
+                                            <input type="text" 
+                                                   class="form-control" 
+                                                   id="nombre" 
+                                                   name="nombre" 
+                                                   required
+                                                   pattern="[A-Za-zÁ-ú\s]{2,}">
+                                            <small class="form-text text-muted">Mínimo 2 caracteres</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="apellido" class="font-weight-bold">Apellido</label>
+                                            <input type="text" 
+                                                   class="form-control" 
+                                                   id="apellido" 
+                                                   name="apellido"
+                                                   pattern="[A-Za-zÁ-ú\s]{2,}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="telefono" class="font-weight-bold">Teléfono</label>
+                                            <input type="tel" 
+                                                   class="form-control" 
+                                                   id="telefono" 
+                                                   name="telefono"
+                                                   pattern="[0-9]{8,12}">
+                                            <small class="form-text text-muted">Formato: 12345678</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary px-4">
+                                    <i class="fas fa-save mr-2"></i>Guardar cambios
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pestaña Direcciones -->
+                <div class="tab-pane fade" id="nav-direcciones" role="tabpanel" aria-labelledby="nav-direcciones-tab">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="mb-0 font-weight-bold">Mis Direcciones</h5>
+                                <button class="btn btn-success" onclick="mostrarModalDireccion()">
+                                    <i class="fas fa-plus-circle mr-2"></i>Nueva Dirección
+                                </button>
+                            </div>
+                            
+                            <div id="lista-direcciones" class="row">
+                                <!-- Contenido dinámico de direcciones -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pestaña Pedidos -->
+                <div class="tab-pane fade" id="nav-pedidos" role="tabpanel" aria-labelledby="nav-pedidos-tab">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-borderless">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">N° Pedido</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="lista-pedidos">
+                                        <!-- Contenido dinámico de pedidos -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Direcciones -->
+<div class="modal fade" id="modalDireccion" tabindex="-1" role="dialog" aria-labelledby="modalDireccionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-bold" id="modalDireccionLabel">Gestión de Dirección</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="form-direccion">
+                <div class="modal-body">
+                    <input type="hidden" name="id_direccion">
+                    <div class="form-group">
+                        <label for="alias" class="font-weight-bold">Alias</label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="alias" 
+                               name="alias" 
+                               required
+                               placeholder="Ej: Casa, Oficina">
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion" class="font-weight-bold">Dirección completa</label>
+                        <textarea class="form-control" 
+                                  id="direccion" 
+                                  name="direccion" 
+                                  rows="3" 
+                                  required
+                                  placeholder="Calle, número, referencia"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ciudad" class="font-weight-bold">Ciudad</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="ciudad" 
+                                       name="ciudad" 
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="departamento" class="font-weight-bold">Departamento</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="departamento" 
+                                       name="departamento" 
+                                       required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="principal" class="font-weight-bold">¿Dirección principal?</label>
+                        <select class="form-control" id="principal" name="principal">
+                            <option value="0">No</option>
+                            <option value="1">Sí</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Dirección</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts necesarios -->
+<script src="resources/jquery/jquery.min.js"></script>
+<script src="resources/popper/popper.min.js"></script>
+<script src="resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/sweetalert/sweetalert2.all.min.js"></script>
+<script src="app/controllers/perfil.js"></script>

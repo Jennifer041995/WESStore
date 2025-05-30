@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/sweetalert/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css" />
+<link rel="stylesheet" href="resources/bootstrap/css/inicio.css">
+
+<div class="container mt-5">
+    <!-- Carrusel de banners -->
+    <div id="mainCarousel" class="carousel slide mb-4" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#mainCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#mainCarousel" data-slide-to="1"></li>
+            <li data-target="#mainCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner rounded">
+            <div class="carousel-item active">
+                <img src="media/img/imagen.png" class="d-block w-100" alt="Banner 1">
+            </div>
+            <div class="carousel-item">
+                <img src="media/img/logo.png" class="d-block w-100" alt="Banner 2">
+            </div>
+            <div class="carousel-item">
+                <img src="media/img/ico.png" class="d-block w-100" alt="Banner 3">
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+        </a>
+    </div>
+
+    <!-- CATEGORÍAS -->
+    <section class="mt-5">
+        <h2 class="text-center mb-4">Categorías</h2>
+        <div id="categorias-list" class="d-flex align-items-center"></div>
+    </section>
+
+    <!-- MARCAS -->
+    <section class="mt-5">
+        <h2 class="text-center mb-4">Marcas Destacadas</h2>
+        <div id="marcas-list" class="d-flex align-items-center"></div>
+    </section>
+</div>
+
+
+<script src="resources/jquery/jquery.min.js"></script>
+<script src="resources/popper/popper.min.js"></script>
+<script src="resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/sweetalert/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
+<script src="app/controllers/inicio.js"></script>
