@@ -1,49 +1,81 @@
-const API = '../../models/auth/AuthModel.php';
+$(document).ready(function() {
+    // Helper para peticiones Ajax
+    function ajaxPost(url, payload, onSuccess, onError) {
+        $.ajax({
+            url: url,
+            method: 'POST',
+            data: JSON.stringify(payload),
+            contentType: 'application/json',
+            dataType: 'json'
+        })
+        .done(onSuccess)
+        .fail(function(jqXHR) {
+            // Manejo de errores robusto
+            let msg = 'Error en la petición';
+            if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
+                msg = jqXHR.responseJSON.error;
+            } else if (jqXHR.responseText) {
+                try {
+                    const r = JSON.parse(jqXHR.responseText);
+                    if (r.error) msg = r.error;
+                } catch (e) {
+                    // Response no es JSON
+                }
+            }
+            onError({ message: msg });
+        });
+    }
 
-async function postData(action, form) {
-  const formData = new FormData(form);
-  const response = await fetch(`${API}?action=${action}`, {
-    method: 'POST',
-    body: formData
-  });
-  const text = await response.text();
-  try {
-    return JSON.parse(text);
-  } catch (err) {
-    console.error('Respuesta no JSON:', text);
-    Swal.fire('Error del servidor. Revisa la consola.');
-    throw new Error('Invalid JSON');
-  }
-}
+    // Registro (delegado)
+    $(document)
+      .off('submit', '#formRegister')
+      .on('submit', '#formRegister', function(e) {
+        e.preventDefault();
+        const data = {
+            nombre:   $('#regNombre').val(),
+            apellido: $('#regApellido').val(),
+            email:    $('#regEmail').val(),
+            password: $('#regPassword').val()
+        };
+        ajaxPost('app/models/auth/register.php', data,
+            function(res) {
+                Swal.fire('¡Registrado!','Te hemos dado la bienvenida.','success')
+                  .then(() => $('#authModal').modal('hide'));
+            },
+            function(err) {
+                Swal.fire('Error', err.message, 'error');
+            }
+        );
+    })
 
-// Registro
-const registerForm = document.getElementById('registerForm');
-if (registerForm) {
-  registerForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    try {
-      const result = await postData('register', registerForm);
-      Swal.fire(result.msg);
-      if (result.status) location.href = 'login.html';
-    } catch {} // el error ya se mostró
-  });
-}
+    // Login (delegado)
+    .off('submit', '#formLogin')
+    .on('submit', '#formLogin', function(e) {
+        e.preventDefault();
+        const data = {
+            email:    $('#logEmail').val(),
+            password: $('#logPassword').val()
+        };
+        ajaxPost('app/models/auth/login.php', data,
+            function(res) {
+                Swal.fire('¡Bienvenido!','Has iniciado sesión.', 'success')
+                  .then(() => location.reload());
+            },
+            function(err) {
+                Swal.fire('Error', err.message, 'error');
+            }
+        );
+    });
 
-// Login
-const loginForm = document.getElementById('loginForm');
-if (loginForm) {
-  loginForm.addEventListener('submit', async e => {
-    e.preventDefault();
-    try {
-      const result = await postData('login', loginForm);
-      if (result.status) location.href = '../../../index.html';
-      else Swal.fire(result.msg);
-    } catch {} // ya manejado
-  });
-}
-
-// Logout
-function logout() {
-  fetch(`${API}?action=logout`)
-    .then(() => location.href = 'login.html');
-}
+    // Logout (fuera del modal)
+    $('#btnLogout').off('click').on('click', function() {
+        ajaxPost('app/models/auth/logout.php', {},
+            function() {
+                location.href = '?mod=home';
+            },
+            function(err) {
+                Swal.fire('Error', err.message, 'error');
+            }
+        );
+    });
+});
