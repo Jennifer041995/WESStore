@@ -35,7 +35,7 @@ $rol = $_SESSION['usuario']['rol_id'] ?? null;
                     <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="?mod=home" class="nav-link">Inicio</a>
+                    <a  href="<?php echo BASE_URL_PROJECT; ?>/home" class="nav-link">Inicio</a>
                 </li>
                 <?php if (empty($_SESSION['usuario'])): ?>
                 <!-- Botón login si no hay sesión -->
@@ -58,7 +58,7 @@ $rol = $_SESSION['usuario']['rol_id'] ?? null;
 
         <!-- Sidebar -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="?mod=home" class="brand-link">
+            <a  href="<?php echo BASE_URL_PROJECT; ?>/home" class="brand-link">
                 <img src="media/img/logo.png" alt="WES Store Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light">WES Store</span>
             </a>
@@ -80,7 +80,7 @@ $rol = $_SESSION['usuario']['rol_id'] ?? null;
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                         <li class="nav-item">
-                            <a href="?mod=inicio" class="nav-link">
+                            <a href="<?php echo BASE_URL_PROJECT; ?>/inicio" class="nav-link">
                                 <i class="nav-icon fas fa-home"></i>
                                 <p>Inicio</p>
                             </a>
@@ -88,7 +88,7 @@ $rol = $_SESSION['usuario']['rol_id'] ?? null;
 
 
                         <li class="nav-item">
-                            <a href="?mod=productos" class="nav-link">
+                            <a href="<?php echo BASE_URL_PROJECT; ?>/productos" class="nav-link">
                                 <i class="nav-icon fas fa-boxes"></i>
                                 <p>Productos</p>
                             </a>
@@ -96,7 +96,7 @@ $rol = $_SESSION['usuario']['rol_id'] ?? null;
 
                         <?php if (!empty($_SESSION['usuario'])): ?>
                         <li class="nav-item">
-                            <a href="?mod=carrito" class="nav-link">
+                            <a href="<?php echo BASE_URL_PROJECT; ?>/carrito" class="nav-link">
                                 <i class="nav-icon fas fa-shopping-basket"></i>
                                 <p>Carrito</p>
                             </a>
@@ -105,7 +105,7 @@ $rol = $_SESSION['usuario']['rol_id'] ?? null;
 
                         <?php if (!empty($_SESSION['usuario'])): ?>
                         <li class="nav-item">
-                            <a href="?mod=perfil" class="nav-link">
+                            <a href="<?php echo BASE_URL_PROJECT; ?>/perfil" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Perfil</p>
                             </a>
@@ -115,7 +115,7 @@ $rol = $_SESSION['usuario']['rol_id'] ?? null;
                         <!-- Solo Admin (1) y Empleado (3) -->
                         <?php if (in_array($rol, [1,3], true)): ?>
                         <li class="nav-item">
-                            <a href="?mod=admin" class="nav-link">
+                            <a href="<?php echo BASE_URL_PROJECT; ?>/admin" class="nav-link">
                                 <i class="nav-icon fas fa-user-cog"></i>
                                 <p>Administrador</p>
                             </a>
@@ -125,7 +125,7 @@ $rol = $_SESSION['usuario']['rol_id'] ?? null;
                         <!-- Solo Cliente (2) -->
                         <?php if ($rol === 2): ?>
                         <li class="nav-item">
-                            <a href="?mod=pedidos" class="nav-link">
+                            <a href="<?php echo BASE_URL_PROJECT; ?>/pedidos" class="nav-link">
                                 <i class="nav-icon fas fa-shopping-cart"></i>
                                 <p>Mis Pedidos</p>
                             </a>
