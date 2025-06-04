@@ -35,19 +35,20 @@ $(document).ready(function() {
         }
 
         $.each(productos, function(_, producto) {
-            var $card = $(
+            var $card = $( 
                 '<div class="col-md-4 mb-3">' +
-                  '<div class="card h-100">' +
+                    '<div class="card h-100">' +
+                    '<img src="' + producto.imagen_principal + '" class="card-img-top" alt="' + producto.nombre + '">'+
                     '<div class="card-body d-flex flex-column">' +
-                      '<h5 class="card-title">'+ producto.nombre +'</h5>' +
-                      '<p class="card-text flex-grow-1">'+ producto.descripcion_corta +'</p>' +
-                      '<p class="card-text"><strong>$'+ producto.precio +'</strong></p>' +
-                      '<div class="mt-auto d-flex justify-content-between">' +
-                        '<button class="btn btn-primary btn-ver-detalle" data-id="'+ producto.id_producto +'">Vista previa</button>' +
-                        '<button class="btn btn-success btn-add-carrito" data-id="'+ producto.id_producto +'">Añadir al carrito</button>' +
-                      '</div>' +
+                        '<h5 class="card-title">' + producto.nombre + '</h5>' +
+                        '<p class="card-text flex-grow-1">' + producto.descripcion_corta + '</p>' +
+                        '<p class="card-text"><strong>$' + producto.precio + '</strong></p>' +
+                        '<div class="mt-auto d-flex justify-content-between">' +
+                        '<button class="btn btn-primary btn-ver-detalle" data-id="' + producto.id_producto + '">Vista previa</button>' +
+                        '<button class="btn btn-success btn-add-carrito" data-id="' + producto.id_producto + '">Añadir al carrito</button>' +
+                        '</div>' +
                     '</div>' +
-                  '</div>' +
+                    '</div>' +
                 '</div>'
             );
             $contenedorProductos.append($card);

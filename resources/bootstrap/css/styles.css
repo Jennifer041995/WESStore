@@ -1,14 +1,23 @@
 /* Estilos generales */
+* {
+    box-sizing: border-box; /* Asegura que el padding y border estén dentro del tamaño total de los elementos */
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f8f9fa;
     color: #0a0a0a;
+    margin: 0;
+    padding: 0;
 }
 
+/* Contenedor */
 .container {
     max-width: 1200px;
+    margin: 0 auto;
 }
 
+/* Títulos de secciones */
 .section-title {
     position: relative;
     padding-bottom: 10px;
@@ -34,7 +43,7 @@ body {
     transform: scale(1.05);
 }
 
-/* Estilos para tarjetas de productos */
+/* Estilos para las tarjetas de productos */
 .product-card {
     transition: all 0.3s ease;
     border: 1px solid #dee2e6;
@@ -93,11 +102,11 @@ body {
     .navbar-collapse {
         margin-top: 15px;
     }
-    
+
     .carousel-item img {
         height: 250px;
     }
-    
+
     .product-card .card-img-top {
         height: 150px;
     }
@@ -107,12 +116,13 @@ body {
     .carousel-item img {
         height: 200px;
     }
-    
+
     .product-card {
         margin-bottom: 20px;
     }
 }
 
+/* Sección de productos destacados */
 .featured-products {
     position: relative; /* Necesario para el posicionamiento */
     width: 100%;
@@ -126,7 +136,7 @@ body {
 .product-item {
     display: inline-block;
     vertical-align: top;
-    transition: none; /* Importante para evitar saltos */
+    transition: transform 0.3s ease; /* Asegura que el efecto de hover sea suave */
 }
 
 /* Ajustes para las cards */
@@ -135,6 +145,14 @@ body {
     max-width: 200px;  /* Ancho máximo (ajústalo según tus necesidades) */
     margin: 0 auto;    /* Centra la card si es necesario */
     word-wrap: break-word; /* Rompe palabras largas */
+    background: #ebe8e8; /* Color de fondo opcional */
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.3s ease; /* Agregado para mayor consistencia */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Efecto hover opcional */
 }
 
 .card-title, .card-text {
@@ -156,6 +174,7 @@ body {
     box-sizing: border-box;
 }
 
+/* Estilos para categorías */
 #category-section {
     width: 100%;
     background: #020070; /* Fondo opcional */
@@ -164,7 +183,6 @@ body {
 .inner-categories {
     position: relative;
     left: 0;
-
 }
 
 .category-item {
@@ -172,17 +190,17 @@ body {
     vertical-align: top;
 }
 
-.card {
-    background: #ebe8e8; /* Color de fondo opcional */
-    border: none;
-    border-radius: 10px;
-    transition: transform 0.3s;
+.category-header {
+    transition: all 0.3s;
+    padding: 8px 12px;
+    border-radius: 4px;
 }
 
-.card:hover {
-    transform: scale(1.05); /* Efecto hover opcional */
+.category-header:hover {
+    background-color: #f8f9fa;
 }
 
+/* Estilos para marcas */
 #brands-section {
     background: #adacac; /* Fondo opcional */
 }
@@ -199,5 +217,5 @@ body {
 
 .brand-item:hover .card {
     transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Efecto hover */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Efecto hover */
 }

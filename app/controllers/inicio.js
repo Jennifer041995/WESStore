@@ -3,7 +3,6 @@ $(document).ready(function () {
     cargarMarcas();
 });
 
-// Cargar categorías en tarjetas con slider
 function cargarCategorias() {
     $.ajax({
         url: 'app/models/public/list_categorias.php',
@@ -16,19 +15,20 @@ function cargarCategorias() {
 
                 response.data.forEach(categoria => {
                     contenedor.append(`
-                        <div class="col-md-4 mb-3">
-                            <div class="card h-100 shadow-sm">
-                                <div class="card-body text-center">
-                                    <i class="fas fa-tag fa-2x text-primary mb-2"></i>
-                                    <h5 class="card-title">${categoria.nombre_categoria}</h5>
-                                    <p class="card-text">${categoria.descripcion}</p>
-                                </div>
-                            </div>
+                        <div class="tech-category-card">
+                            <img src="${categoria.imagen}"
+                                alt="${categoria.nombre_categoria}"
+                                class="tech-category-img"
+                                onerror="this.src='https://via.placeholder.com/150';"
+                            >
+                            <h3 class="tech-category-title">${categoria.nombre_categoria}</h3>
+                            <p class="tech-category-desc">
+                                ${categoria.descripcion || 'Productos de alta tecnología'}
+                            </p>
                         </div>
                     `);
                 });
 
-                // Inicializar Tiny Slider
                 tns({
                     container: '#categorias-list',
                     items: 3,
@@ -38,12 +38,15 @@ function cargarCategorias() {
                     controls: false,
                     nav: false,
                     mouseDrag: true,
-                    gutter: 10,
+                    gutter: 15,
                     loop: true,
-                    autoplayTimeout: 3000
+                    autoplayTimeout: 3000,
+                    responsive: {
+                        0: { items: 1 },
+                        576: { items: 2 },
+                        992: { items: 3 }
+                    }
                 });
-            } else {
-                console.warn('No se pudieron cargar las categorías');
             }
         },
         error: function (xhr, status, error) {
@@ -52,7 +55,6 @@ function cargarCategorias() {
     });
 }
 
-// Cargar marcas en tarjetas con slider
 function cargarMarcas() {
     $.ajax({
         url: 'app/models/public/list_marcas.php',
@@ -65,13 +67,13 @@ function cargarMarcas() {
 
                 response.data.forEach(marca => {
                     contenedor.append(`
-                        <div class="col-md-3 col-sm-6 mb-3">
-                            <div class="card h-100 text-center border-0">
-                                <div class="card-body">
-                                    <img src="media/img/marcas/${marca.logo}" alt="${marca.nombre_marca}" class="img-fluid" style="max-height: 60px;">
-                                    <p class="mt-2">${marca.nombre_marca}</p>
-                                </div>
-                            </div>
+                        <div class="tech-brand-card">
+                            <img src="${marca.logo}"
+                                alt="${marca.nombre_marca}"
+                                class="tech-brand-logo"
+                                onerror="this.src='https://via.placeholder.com/100';"
+                            >
+                            <p class="tech-brand-name">${marca.nombre_marca}</p>
                         </div>
                     `);
                 });
@@ -85,12 +87,15 @@ function cargarMarcas() {
                     controls: false,
                     nav: false,
                     mouseDrag: true,
-                    gutter: 10,
+                    gutter: 15,
                     loop: true,
-                    autoplayTimeout: 2500
+                    autoplayTimeout: 2500,
+                    responsive: {
+                        0: { items: 2 },
+                        768: { items: 3 },
+                        992: { items: 4 }
+                    }
                 });
-            } else {
-                console.warn('No se pudieron cargar las marcas');
             }
         },
         error: function (xhr, status, error) {
