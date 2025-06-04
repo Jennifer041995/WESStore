@@ -1,0 +1,94 @@
+
+
+    <!-- PASO 1: Información del cliente -->
+    <div id="paso-1">
+      <h5>Información del cliente</h5>
+      <form id="form-cliente">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="nombres" class="form-label">Nombres</label>
+            <input type="text" class="form-control" id="nombres" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Escribe tu nombre" inputmode="text">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="apellidos" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" id="apellidos" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+" title="Escribe tus apellidos" inputmode="text">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="email" class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="dui" class="form-label">DUI</label>
+            <input type="text" class="form-control" id="dui" required pattern="^\d{7}-\d$" title="Formato 0000000-0">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="tel" class="form-control" id="telefono" required pattern="^\d{8}$" title="Debe contener 8 dígitos" inputmode="numeric">
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="irAlPaso(2)">Siguiente</button>
+      </form>
+    </div>
+
+    <!-- PASO 2: Dirección -->
+    <div id="paso-2" class="d-none">
+      <h5>Dirección de entrega</h5>
+      <form id="form-direccion">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="departamento" class="form-label">Departamento</label>
+            <select id="departamento" class="form-select"></select>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="municipio" class="form-label">Municipio</label>
+            <select id="municipio" class="form-select"></select>
+          </div>
+          <div class="col-12 mb-3">
+            <label for="direccionCompleta" class="form-label">Dirección completa</label>
+            <textarea id="direccionCompleta" class="form-control" rows="2" required></textarea>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" onclick="irAlPaso(1)">Anterior</button>
+          <button type="button" class="btn btn-primary" onclick="irAlPaso(3)">Siguiente</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- PASO 3: Resumen + Pago -->
+    <div id="paso-3" class="d-none">
+      <h5>Resumen del carrito</h5>
+      <div id="resumen-carrito" class="table-responsive mb-4"></div>
+
+      <h5>Pago con tarjeta</h5>
+      <form id="form-pago">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="tarjeta" class="form-label">Número de tarjeta</label>
+            <input type="number" class="form-control" id="tarjeta" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="nombre-tarjeta" class="form-label">Nombre en la tarjeta</label>
+            <input type="text" class="form-control" id="nombre-tarjeta" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="fecha-vencimiento" class="form-label">Fecha de vencimiento</label>
+            <input type="month" class="form-control" id="fecha-vencimiento" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="cvv" class="form-label">CVV</label>
+            <input type="number" class="form-control" id="cvv" required>
+          </div>
+        </div>
+      </form>
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" onclick="irAlPaso(2)">Anterior</button>
+        <button type="button" class="btn btn-success" onclick="finalizarCompra()">Finalizar compra</button>
+      </div>
+    </div>
+ 
+    <!-- PASO 4: Confirmación -->
+    <div id="paso-4" class="d-none text-center">
+      <div id="confirmacion-final"></div>
+    </div>
+  </div> 
