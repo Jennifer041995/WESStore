@@ -1,7 +1,7 @@
 <?php
 function getConnection() {
     $host = 'localhost';
-    $db   = 'wes_store_db';
+    $db   = 'wes_store';
     $user = 'root';
     $pass = '';
     $charset = 'utf8mb4';

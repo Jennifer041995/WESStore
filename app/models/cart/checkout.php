@@ -1,5 +1,5 @@
 <?php
-// C:\xampp1\htdocs\WESStore2\app\models\cart\checkout.php
+// C:\xampp1\htdocs\WESStore\app\models\cart\checkout.php
 
 // Paso 1: Inicio de Sesión y Configuración Inicial
 session_start(); // Inicia o reanuda la sesión PHP para acceder a $_SESSION.
@@ -246,7 +246,7 @@ try {
             'status' => 'success',
             'message' => '¡Pedido realizado y factura generada!',
             'pedido_id' => $pedido_id,
-            'invoice_url' => '/WESStore2/app/models/download_invoice.php?pedido_id=' . $pedido_id
+            'invoice_url' => '/WESStore/app/models/download_invoice.php?pedido_id=' . $pedido_id
         ]);
     } else {
         // Si el PDF no se puede generar, envía una advertencia (el pedido ya se realizó).

@@ -5,7 +5,7 @@ define('LAYOUT_LOGIN', 'login.php');
 define('LAYOUT_DESKTOP', 'desktop.php');
 define('MODULO_PATH',  realpath('app/views'));
 define('LAYOUT_PAHT', realpath('app/templates'));
-define('BASE_URL_PROJECT', '/WESStore2');
+define('BASE_URL_PROJECT', '/WESStore');
 
 $id_rol = 2;
 
