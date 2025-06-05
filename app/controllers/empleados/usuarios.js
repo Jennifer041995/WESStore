@@ -10,10 +10,7 @@ $(function() {
     $.ajax({
       url: 'app/models/empleados/get_usuarios.php',
       method: 'GET',
-<<<<<<< HEAD
-=======
       data: { rol_id: 2 }, // Aquí se envía el filtro por rol_id
->>>>>>> 10c551a (Actualizacion)
       dataType: 'json'
     })
     .done(function(res) {

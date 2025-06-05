@@ -2,7 +2,7 @@
     date_default_timezone_set('America/El_Salvador');
     setlocale(LC_TIME, 'spanish');
 
-    session_start(); 
+    session_start(); // ¡Fundamental! Siempre al inicio.
 
     require_once('conf.php'); // Carga tu archivo de configuración.
 

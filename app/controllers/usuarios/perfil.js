@@ -1,7 +1,6 @@
-$(function() { 
+$(function() {
   const $alertBox = $('#alert-perfil');
 
-  // 1) Función: mostrar alerta temporal
   function showAlert(type, message) {
     $alertBox
       .removeClass('alert-success alert-danger alert-warning')
@@ -12,9 +11,6 @@ $(function() {
       .fadeOut(200);
   }
 
-  // ======================================================================
-  // 2) Configuración de departamentos y municipios (misma lógica del checkout)
-  // ======================================================================
   const departamentos = {
     'Ahuachapán': ['Ahuachapán','Atiquizaya','Turín','El Refugio','Guaymango','Jujutla','San Francisco Menéndez','San Lorenzo','San Pedro Puxtla','Tacuba'],
     'Cabañas':    ['Sensuntepeque','Ilobasco','Cinquera','Guacotecti','Jutiapa','San Isidro','Tejutepeque','Victoria'],
@@ -32,7 +28,6 @@ $(function() {
     'Usulután': ['Usulután','Jiquilisco','Alegría','Berlín','Concepción Batres','Ereguayquín','Estanzuelas','Jucuapa','Mercedes Umaña','Nueva Granada','Ozatlán','Puerto El Triunfo','San Agustín','San Buenaventura','San Dionisio','San Francisco Javier','Santa Elena','Santa María','Santiago de María','Tecapán']
   };
 
-  // 2.1) Funcion: cargar la lista de departamentos en el <select id="modal-departamento">
   function cargarDepartamentos() {
     const $dep = $('#modal-departamento')
       .empty()
@@ -42,7 +37,6 @@ $(function() {
     });
   }
 
-  // 2.2) Funcion: cargar municipios según el departamento seleccionado
   function cargarMunicipios() {
     const dpto = $('#modal-departamento').val();
     const $mun = $('#modal-municipio')
@@ -53,12 +47,10 @@ $(function() {
     });
   }
 
-  // 2.3) Cuando se abra el modal “Editar Ubicación”, inicializamos selects
+  // Cuando se abra el modal “Editar Ubicación”
   $('#modalEditAddress').on('show.bs.modal', function() {
-    // Cargar todos los departamentos
     cargarDepartamentos();
 
-    // Preseleccionar los valores existentes en la vista de solo lectura
     const alias         = $('#display-alias').text().trim();
     const direccion     = $('#display-direccion').text().trim();
     const ciudad        = $('#display-ciudad').text().trim();
@@ -66,16 +58,13 @@ $(function() {
     const codigo_postal = $('#display-codigo_postal').text().trim();
     const pais          = $('#display-pais').text().trim();
 
-    // 2.3.1) Prellenar alias y dirección completa
     $('#modal-alias').val(alias === '-' ? '' : alias);
     $('#modal-direccion').val(direccion === '-' ? '' : direccion);
     $('#modal-codigo_postal').val(codigo_postal === '-' ? '' : codigo_postal);
     $('#modal-pais').val(pais === '-' ? 'El Salvador' : pais);
 
-    // 2.3.2) Preseleccionar departamento y municipio (si existen)
     if (departamento && departamentos[departamento]) {
       $('#modal-departamento').val(departamento);
-      // Cargar municipios para ese departamento
       cargarMunicipios();
       if (departamentos[departamento].includes(ciudad)) {
         $('#modal-municipio').val(ciudad);
@@ -88,12 +77,8 @@ $(function() {
     }
   });
 
-  // 2.4) Vincular el evento change del <select> departamento → cargar municipios
   $('#modal-departamento').on('change', cargarMunicipios);
 
-  // ======================================================================
-  // 3) Cargar y mostrar datos en la vista “solo lectura”
-  // ======================================================================
   function loadProfile() {
     $.ajax({
       url: 'app/models/usuarios/get_perfil.php',
@@ -105,13 +90,11 @@ $(function() {
           return;
         }
 
-        // Poner valores en la sección de solo lectura
+        // Datos de lectura
         $('#display-nombre'       ).text(res.usuario.nombre);
         $('#display-apellido'     ).text(res.usuario.apellido);
         $('#display-email'        ).text(res.usuario.email);
         $('#display-telefono'     ).text(res.usuario.telefono || '-');
-        $('#display-rol'          ).text(res.usuario.nombre_rol || '-');
-        $('#display-ultimo-login' ).text(res.usuario.ultimo_login || '-');
 
         // Dirección
         if (res.direccion) {
@@ -130,19 +113,17 @@ $(function() {
           $('#display-pais'         ).text('-');
         }
 
-        // 3.1) Personal info para rellenar el modal de editar info
+        // Rellenar modal de editar info personal
         $('#modal-nombre'  ).val(res.usuario.nombre);
         $('#modal-apellido').val(res.usuario.apellido);
         $('#modal-email'   ).val(res.usuario.email);
-        $('#modal-telefono').val(res.usuario.telefono);
+        $('#modal-telefono').val(res.usuario.telefono || '');
 
-        // 3.2) Dirección info para rellenar el modal de editar ubicación
         if (res.direccion) {
           $('#modal-alias'        ).val(res.direccion.alias);
           $('#modal-direccion'    ).val(res.direccion.direccion);
           $('#modal-codigo_postal').val(res.direccion.codigo_postal);
           $('#modal-pais'         ).val(res.direccion.pais);
-          // El departamento/municipio se cargará al abrir el modal (show.bs.modal)
         } else {
           $('#modal-alias'        ).val('');
           $('#modal-direccion'    ).val('');
@@ -158,9 +139,9 @@ $(function() {
     });
   }
 
-  // ======================================================================
-  // 4) Enviar formulario “Editar Info Personal”
-  // ======================================================================
+  // ————————————
+  // Actualizar INFO PERSONAL
+  // ————————————
   $('#form-perfil-modal').on('submit', function(e) {
     e.preventDefault();
 
@@ -186,30 +167,50 @@ $(function() {
         if (res.ok) {
           // 1) Cerrar el modal
           $('#modalEditPersonal').modal('hide');
-          // 2) Quitar aria-hidden y style residual
-          $('#modalEditPersonal').removeAttr('aria-hidden').removeAttr('style');
-          // 3) Eliminar backdrop y desbloquear body
+
+          // 2) Eliminar cualquier aria-hidden que Bootstrap haya dejado
+          $('[aria-hidden="true"]').removeAttr('aria-hidden');
+
+          // 3) Eliminar backdrop y clases de Bootstrap del <body>
           $('.modal-backdrop').remove();
           $('body').removeClass('modal-open');
           $('body').css('padding-right', '');
-          // 4) Mover foco al botón “Editar Info”
+
+          // 4) Devolver el foco al botón “Editar Info”
           $('#btnEditarInfo').focus();
-          // 5) Mostrar alerta y recargar perfil
-          showAlert('success', res.message || 'Información actualizada');
+
+          // 5) Mostrar SweetAlert de éxito
+          Swal.fire({
+            icon: 'success',
+            title: '¡Listo!',
+            text: res.message || 'Información personal actualizada con éxito.',
+            confirmButtonText: 'Aceptar'
+          });
+
           loadProfile();
         } else {
-          showAlert('danger', res.message || 'Error al actualizar');
+          Swal.fire({
+            icon: 'error',
+            title: '¡Ups!',
+            text: res.message || 'Error al actualizar la información.',
+            confirmButtonText: 'Cerrar'
+          });
         }
       },
       error: function() {
-        showAlert('danger', 'Error en la conexión al servidor.');
+        Swal.fire({
+          icon: 'error',
+          title: '¡Error!',
+          text: 'Error en la conexión al servidor.',
+          confirmButtonText: 'Cerrar'
+        });
       }
     });
   });
 
-  // ======================================================================
-  // 5) Enviar formulario “Cambiar Contraseña”
-  // ======================================================================
+  // ————————————
+  // Cambiar CONTRASEÑA (pedir confirmación antes)
+  // ————————————
   $('#form-password-modal').on('submit', function(e) {
     e.preventDefault();
 
@@ -224,42 +225,82 @@ $(function() {
       return;
     }
 
-    $.ajax({
-      url: 'app/models/usuarios/update_password.php',
-      method: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify(payload),
-      dataType: 'json',
-      success: function(res) {
-        if (res.ok) {
-          // 1) Cerrar modal
-          $('#modalChangePassword').modal('hide');
-          // 2) Quitar aria-hidden y style residual
-          $('#modalChangePassword').removeAttr('aria-hidden').removeAttr('style');
-          // 3) Eliminar backdrop y desbloquear body
-          $('.modal-backdrop').remove();
-          $('body').removeClass('modal-open');
-          $('body').css('padding-right', '');
-          // 4) Mover foco al botón “Cambiar Contraseña”
-          $('#btnCambiarPassword').focus();
-          // 5) Mostrar alerta y limpiar campos
-          showAlert('success', res.message || 'Contraseña actualizada');
-          $('#modal-old-password').val('');
-          $('#modal-new-password').val('');
-          $('#modal-confirm-password').val('');
-        } else {
-          showAlert('danger', res.message || 'Error al cambiar contraseña');
-        }
-      },
-      error: function() {
-        showAlert('danger', 'Error en la conexión al servidor.');
+    if (payload.new_password !== payload.confirm_password) {
+      showAlert('warning', 'La nueva contraseña y su confirmación no coinciden.');
+      return;
+    }
+
+    // Antes de ejecutar, pedimos confirmación con SweetAlert
+    Swal.fire({
+      icon: 'warning',
+      title: '¿Cambiar contraseña?',
+      text: '¿Estás seguro de que deseas actualizar tu contraseña?',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, cambiar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Si el usuario confirma, enviamos la petición AJAX
+        $.ajax({
+          url: 'app/models/usuarios/update_password.php',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(payload),
+          dataType: 'json',
+          success: function(res) {
+            if (res.ok) {
+              // 1) Cerrar el modal
+              $('#modalChangePassword').modal('hide');
+
+              // 2) Eliminar cualquier aria-hidden que haya quedado
+              $('[aria-hidden="true"]').removeAttr('aria-hidden');
+
+              // 3) Eliminar backdrop y clases de Bootstrap
+              $('.modal-backdrop').remove();
+              $('body').removeClass('modal-open');
+              $('body').css('padding-right', '');
+
+              // 4) Devolver el foco al botón “Cambiar Contraseña”
+              $('#btnCambiarPassword').focus();
+
+              // 5) SweetAlert de éxito
+              Swal.fire({
+                icon: 'success',
+                title: '¡Contraseña cambiada!',
+                text: res.message || 'Tu contraseña se ha actualizado con éxito.',
+                confirmButtonText: 'Aceptar'
+              });
+
+              // Limpiar campos
+              $('#modal-old-password').val('');
+              $('#modal-new-password').val('');
+              $('#modal-confirm-password').val('');
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: '¡Error!',
+                text: res.message || 'No se pudo cambiar la contraseña.',
+                confirmButtonText: 'Cerrar'
+              });
+            }
+          },
+          error: function() {
+            Swal.fire({
+              icon: 'error',
+              title: '¡Error!',
+              text: 'Error en la conexión al servidor.',
+              confirmButtonText: 'Cerrar'
+            });
+          }
+        });
       }
+      // Si el usuario canceló, no hacemos nada
     });
   });
 
-  // ======================================================================
-  // 6) Enviar formulario “Editar Ubicación”
-  // ======================================================================
+  // ————————————
+  // Actualizar DIRECCIÓN
+  // ————————————
   $('#form-address-modal').on('submit', function(e) {
     e.preventDefault();
 
@@ -285,31 +326,48 @@ $(function() {
       dataType: 'json',
       success: function(res) {
         if (res.ok) {
-          // 1) Mover primero el foco al botón “Editar Ubicación”
-          $('#btnEditarUbicacion').focus();
-          // 2) Cerrar el modal
+          // 1) Cerrar el modal
           $('#modalEditAddress').modal('hide');
-          // 3) Quitar aria-hidden y style residual
-          $('#modalEditAddress').removeAttr('aria-hidden').removeAttr('style');
-          // 4) Eliminar backdrop y desbloquear body
+
+          // 2) Eliminar cualquier aria-hidden que haya quedado
+          $('[aria-hidden="true"]').removeAttr('aria-hidden');
+
+          // 3) Eliminar backdrop y clases de Bootstrap
           $('.modal-backdrop').remove();
           $('body').removeClass('modal-open');
           $('body').css('padding-right', '');
-          // 5) Mostrar alerta y recargar perfil
-          showAlert('success', res.message || 'Ubicación actualizada');
+
+          // 4) Devolver el foco al botón “Editar Ubicación”
+          $('#btnEditarUbicacion').focus();
+
+          // 5) SweetAlert de éxito
+          Swal.fire({
+            icon: 'success',
+            title: '¡Ubicación actualizada!',
+            text: res.message || 'Tu dirección se ha actualizado con éxito.',
+            confirmButtonText: 'Aceptar'
+          });
+
           loadProfile();
         } else {
-          showAlert('danger', res.message || 'Error al actualizar ubicación');
+          Swal.fire({
+            icon: 'error',
+            title: '¡Error!',
+            text: res.message || 'No se pudo actualizar la ubicación.',
+            confirmButtonText: 'Cerrar'
+          });
         }
       },
       error: function() {
-        showAlert('danger', 'Error en la conexión al servidor.');
+        Swal.fire({
+          icon: 'error',
+          title: '¡Error!',
+          text: 'Error en la conexión al servidor.',
+          confirmButtonText: 'Cerrar'
+        });
       }
     });
   });
 
-  // ======================================================================
-  // 7) Inicializar al cargar la página
-  // ======================================================================
   loadProfile();
 });

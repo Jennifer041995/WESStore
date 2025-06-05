@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // Helper para peticiones Ajax
     function ajaxPost(url, payload, onSuccess, onError) {
         $.ajax({
@@ -9,8 +9,7 @@ $(document).ready(function() {
             dataType: 'json'
         })
         .done(onSuccess)
-        .fail(function(jqXHR) {
-            // Manejo de errores robusto
+        .fail(function (jqXHR) {
             let msg = 'Error en la petición';
             if (jqXHR.responseJSON && jqXHR.responseJSON.error) {
                 msg = jqXHR.responseJSON.error;
@@ -28,54 +27,104 @@ $(document).ready(function() {
 
     // Registro (delegado)
     $(document)
-      .off('submit', '#formRegister')
-      .on('submit', '#formRegister', function(e) {
+    .off('submit', '#formRegister')
+    .on('submit', '#formRegister', function (e) {
         e.preventDefault();
+        const password = $('#regPassword').val();
+        const hashedPasswordClient = sha256(password);
+
         const data = {
-            nombre:   $('#regNombre').val(),
+            nombre: $('#regNombre').val(),
             apellido: $('#regApellido').val(),
-            email:    $('#regEmail').val(),
-            password: $('#regPassword').val()
+            email: $('#regEmail').val(),
+            password: hashedPasswordClient
         };
         ajaxPost('app/models/auth/register.php', data,
-            function(res) {
-                Swal.fire('¡Registrado!','Te hemos dado la bienvenida.','success')
-                  .then(() => $('#authModal').modal('hide'));
+            function (res) {
+                // Primero ocultamos el modal para no dejar foco en un elemento con aria-hidden
+                $('#authModal').modal('hide');
+
+                // Luego disparamos el SweetAlert
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Registrado!',
+                    text: 'Te hemos dado la bienvenida.',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => location.reload());
             },
-            function(err) {
-                Swal.fire('Error', err.message, 'error');
+            function (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: err.message,
+                    confirmButtonText: 'Cerrar'
+                });
             }
         );
     })
 
-    // Login (delegado)
+    // Login
     .off('submit', '#formLogin')
-    .on('submit', '#formLogin', function(e) {
+    .on('submit', '#formLogin', function (e) {
         e.preventDefault();
+        const password = $('#logPassword').val();
+        const hashedPasswordClient = sha256(password);
+
         const data = {
-            email:    $('#logEmail').val(),
-            password: $('#logPassword').val()
+            email: $('#logEmail').val(),
+            password: hashedPasswordClient
         };
         ajaxPost('app/models/auth/login.php', data,
-            function(res) {
-                Swal.fire('¡Bienvenido!','Has iniciado sesión.', 'success')
-                  .then(() => location.reload());
+            function (res) {
+                // Ocultamos el modal antes de lanzar el SweetAlert
+                $('#authModal').modal('hide');
+
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Bienvenido!',
+                    text: 'Has iniciado sesión.',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => location.reload());
             },
-            function(err) {
-                Swal.fire('Error', err.message, 'error');
+            function (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: err.message,
+                    confirmButtonText: 'Cerrar'
+                });
             }
         );
     });
 
     // Logout (fuera del modal)
-    $('#btnLogout').off('click').on('click', function() {
-        ajaxPost('app/models/auth/logout.php', {},
-            function() {
-                location.href = '?mod=home';
-            },
-            function(err) {
-                Swal.fire('Error', err.message, 'error');
+    $('#btnLogout').off('click').on('click', function () {
+        Swal.fire({
+            icon: 'warning',
+            title: '¿Cerrar sesión?',
+            text: '¿Estás seguro de que deseas salir?',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, salir',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Si confirma, hacemos la llamada AJAX para cerrar sesión
+                ajaxPost('app/models/auth/logout.php', {},
+                    function () {
+                        // Redirigir al home después de cerrar sesión
+                        location.href = BASE_URL_APP + '/home';
+                    },
+                    function (err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: err.message,
+                            confirmButtonText: 'Cerrar'
+                        });
+                    }
+                );
             }
-        );
+            // Si cancela, no hace nada
+        });
     });
 });

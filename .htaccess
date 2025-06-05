@@ -2,7 +2,7 @@
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /WESStore/
+    RewriteBase /wes_store/
 
     # Si la solicitud NO es un archivo o directorio existente,
     # y la URL es vacía (la raíz del proyecto /WESStore/)
@@ -22,7 +22,7 @@
     # Solo si quieres ocultar las extensiones .php para otros scripts (no es crítico para el éxito del login)
     RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\s([^.]+)\.php\sHTTP/ [NC]
     # Asegúrate de que esta ruta sea correcta si la usas
-    RewriteCond %{REQUEST_URI} !^/WESStore/app/models/ [NC] 
+    RewriteCond %{REQUEST_URI} !^/wes_store/app/models/ [NC] 
     RewriteRule ^ %1 [R=301,L]
 
 </IfModule>

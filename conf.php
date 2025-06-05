@@ -5,7 +5,7 @@ define('LAYOUT_LOGIN', 'login.php');
 define('LAYOUT_DESKTOP', 'desktop.php');
 define('MODULO_PATH',  realpath('app/views'));
 define('LAYOUT_PAHT', realpath('app/templates'));
-define('BASE_URL_PROJECT', '/WESStore');
+define('BASE_URL_PROJECT', '/wes_store');
 
 $id_rol = 2;
 
@@ -48,7 +48,12 @@ $conf['perfil'] = array(
     'layout' => LAYOUT_DESKTOP
 );
 
+$conf['empleado'] = array(
+    'archivo' => 'empleado_panel.html',
+    'layout' => LAYOUT_DESKTOP
+);
+
 $conf['admin'] = array(
-    'archivo' => 'admin.html',
+    'archivo' => 'admin_panel.html',
     'layout' => LAYOUT_DESKTOP
 );

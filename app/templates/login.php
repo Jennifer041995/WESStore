@@ -4,9 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Vehiculos</title>
+  <title>WESStore</title>
 
   <!-- Google Font: Source Sans Pro -->
+   <script src="resources/sha256.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="resources/plugins/fontawesome-free/css/all.min.css">
@@ -61,6 +62,7 @@
   <script src="resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- daterangepicker -->
+   <script src="resources/sha256.min.js"></script>
   <script src="resources/plugins/moment/moment.min.js"></script>
   <script src="resources/plugins/daterangepicker/daterangepicker.js"></script>
   <!-- Tempusdominus Bootstrap 4 -->
