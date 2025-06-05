@@ -1,0 +1,118 @@
+<div class="container-fluid">
+  <h4 class="mb-4">Órdenes de Compra</h4>
+
+  <!-- Botón para añadir nueva orden -->
+  <div class="mb-3">
+    <button id="btn-nueva-orden" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Nueva Orden
+    </button>
+  </div>
+
+  <!-- Tabla de órdenes -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover" id="tbl-ordenes">
+      <thead class="thead-light">
+        <tr>
+          <th>ID</th>
+          <th>Proveedor</th>
+          <th>Fecha Orden</th>
+          <th>Fecha Esperada</th>
+          <th>Subtotal</th>
+          <th>IVA</th>
+          <th>Total</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal: Agregar / Editar Orden -->
+<div class="modal fade" id="ordenModal" tabindex="-1" role="dialog" aria-labelledby="ordenModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="ordenModalLabel">Nueva Orden de Compra</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="form-orden">
+        <div class="modal-body">
+          <input type="hidden" id="id_orden">
+
+          <!-- Cabecera de la Orden -->
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="proveedor_id">Proveedor</label>
+              <select id="proveedor_id" class="form-control" required>
+                <option value="">Seleccione...</option>
+              </select>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="fecha_orden">Fecha de Orden</label>
+              <input type="date" id="fecha_orden" name="fecha_orden" class="form-control" readonly>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="fecha_esperada">Fecha Esperada</label>
+              <input type="date" id="fecha_esperada" name="fecha_esperada" class="form-control">
+            </div>
+          </div>
+
+          <hr>
+
+          <!-- Detalles de la Orden -->
+          <h5>Detalles de Productos</h5>
+          <button type="button" id="btn-agregar-linea" class="btn btn-sm btn-success mb-2">
+            <i class="fas fa-plus"></i> Agregar Línea
+          </button>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered" id="tbl-detalles">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Precio Unitario</th>
+                  <th>Subtotal</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Aquí se inyectan filas dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Totales -->
+          <div class="form-row justify-content-end">
+            <div class="form-group col-md-3">
+              <label for="subtotal">Subtotal</label>
+              <input type="text" class="form-control" id="subtotal" readonly value="0.00">
+            </div>
+            <div class="form-group col-md-2">
+              <label for="iva">IVA (13%)</label>
+              <input type="text" class="form-control" id="iva" readonly value="0.00">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="total">Total</label>
+              <input type="text" class="form-control" id="total" readonly value="0.00">
+            </div>
+          </div>
+
+          <!-- Notas -->
+          <div class="form-group">
+            <label for="notas">Notas</label>
+            <textarea id="notas" class="form-control" rows="2"></textarea>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btn-guardar-orden">Guardar Orden</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

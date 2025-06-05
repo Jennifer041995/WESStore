@@ -20,23 +20,23 @@ try {
         exit;
     }
 
-    $model->crearUsuario(
+     $model->crearUsuario(
         $data['nombre'],
-        $data['apellido']  ?? '',
+        $data['apellido']   ?? '',
         $data['email'],
         $data['password']
     );
 
     // Auto-login tras registro
-    $usuario = $model->obtenerPorEmail($data['email']);
-    $_SESSION['usuario'] = [
+    $usuario = $model->obtenerPorEmail($data['email']); // Sospechoso 1
+    $_SESSION['usuario'] = [ // Sospechoso 2: Manipulación de sesión
         'id'    => $usuario['id_usuario'],
         'nombre'=> $usuario['nombre'],
         'rol_id'=> $usuario['rol_id']
     ];
 
-    echo json_encode(['success' => true]);
-} catch (Exception $e) {
+    echo json_encode(['success' => true]); // Si llega aquí sin excepción, es exitoso.
+} catch (Exception $e) { // La excepción se lanza en algún punto de arriba
     http_response_code(500);
     echo json_encode(['error' => 'Error en el servidor']);
 }

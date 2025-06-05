@@ -6,7 +6,7 @@ require_once __DIR__ . '/../sql/conexion.php';
 try {
     $pdo = getConnection();
 
-    $stmt = $pdo->prepare("SELECT id_categoria, nombre_categoria, descripcion FROM categorias WHERE estado = 1");
+    $stmt = $pdo->prepare("SELECT id_categoria, nombre_categoria, descripcion, imagen FROM categorias WHERE estado = 1");
     $stmt->execute();
     $categorias = $stmt->fetchAll();
 

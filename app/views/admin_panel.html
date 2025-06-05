@@ -1,0 +1,245 @@
+<head>
+  <!-- …tus links a Bootstrap, Font Awesome, SweetAlert… -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+  <link href="resources/sweetalert/sweetalert2.min.css" rel="stylesheet" />
+
+  <style>
+    /* ————————————————————————————————————————
+       Tus estilos (fondo del body, cards, botones, etc.)
+       ———————————————————————————————————————— */
+    body {
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    }
+
+    h4 {
+      color: #00ffff;
+      text-shadow: 0 0 8px #00ffff;
+    }
+
+    .btn-outline-primary {
+      color: #00ffff;
+      border-color: #00ffff;
+      border-radius: 20px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn-outline-primary:hover,
+    .btn-outline-primary.active {
+      background-color: #00ffff;
+      color: #000;
+      box-shadow: 0 0 15px #00ffff;
+    }
+
+    #content-area {
+      padding-top: 20px;
+      border-top: 1px solid #00ffff66;
+      margin-top: 20px;
+    }
+
+    /* ————————————————————————————————————————
+       A partir de aquí, reglas específicas para modales y formularios 
+       que se carguen dentro de #content-area
+       ———————————————————————————————————————— */
+
+    /* 1) Modal: fondo oscuro y texto claro */
+    #content-area .modal-content {
+      background-color: #23233b !important;
+      color: #e0e0e0;
+      border: 1px solid #444;
+    }
+    /* Cabecera del modal */
+    #content-area .modal-header {
+      background-color: #1a1a2f !important;
+      border-bottom: 1px solid #444;
+      color: #fff;
+    }
+    /* Pie de modal */
+    #content-area .modal-footer {
+      background-color: #23233b;
+      border-top: 1px solid #444;
+    }
+    /* Botón “cerrar” (X) en modales */
+    #content-area .modal-header .close span {
+      color: #e0e0e0;
+    }
+    #content-area .modal-header .close:hover span {
+      color: #fff;
+    }
+
+    /* 2) Form controls dentro de content-area: fondo oscuro, texto claro */
+    #content-area .form-control,
+    #content-area .form-select,
+    #content-area .form-control:focus,
+    #content-area .form-select:focus {
+      background-color: #2e2e48 !important;
+      color: #fff !important;
+      border: 1px solid #555 !important;
+      box-shadow: none;
+    }
+    /* Placeholder de los inputs */
+    #content-area .form-control::placeholder {
+      color: #aaa !important;
+    }
+
+    /* Etiquetas y labels */
+    #content-area label {
+      color: #d0d0d0;
+    }
+
+    /* Texto dentro de los inputs (para navegadores antiguos que no soportan color en :placeholder) */
+    #content-area input::-webkit-input-placeholder { color: #aaa; }
+    #content-area input:-ms-input-placeholder { color: #aaa; }
+    #content-area input::-ms-input-placeholder { color: #aaa; }
+    #content-area input::placeholder { color: #aaa; }
+
+    /* 3) Botones de formulario en modales: colores más legibles */
+    #content-area .btn-primary {
+      background-color: #0dcaf0;
+      border-color: #0dcaf0;
+      color: #000;
+    }
+    #content-area .btn-primary:hover {
+      background-color: #0bbbe0;
+      border-color: #0bbbe0;
+      color: #000;
+    }
+
+    #content-area .btn-secondary {
+      background-color: #6c757d;
+      border-color: #6c757d;
+      color: #fff;
+    }
+    #content-area .btn-secondary:hover {
+      background-color: #5a6268;
+      border-color: #5a6268;
+      color: #fff;
+    }
+
+    #content-area .btn-warning {
+      background-color: #ffc107;
+      border-color: #ffc107;
+      color: #000;
+    }
+    #content-area .btn-warning:hover {
+      background-color: #e0a800;
+      border-color: #e0a800;
+      color: #000;
+    }
+
+    /* 4) Scrollbars estilo oscuro (opcional) */
+    #content-area .modal-body {
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+    /* Para navegadores WebKit (Chrome, Edge, Safari) */
+    #content-area .modal-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    #content-area .modal-body::-webkit-scrollbar-thumb {
+      background-color: #555;
+      border-radius: 3px;
+    }
+    #content-area .modal-body::-webkit-scrollbar-track {
+      background-color: #23233b;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-4">
+    <div class="text-center mb-3">
+      <h4>Admin WES</h4>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="d-flex flex-wrap justify-content-center mb-4">
+      <button class="btn btn-outline-primary m-1" id="nav-dashboard"><i class="fas fa-home"></i> Resumen</button>
+      <button class="btn btn-outline-primary m-1" id="nav-usuarios"><i class="fas fa-users"></i> Usuarios</button>
+      <button class="btn btn-outline-primary m-1" id="nav-productos"><i class="fas fa-box-open"></i> Productos</button>
+      <button class="btn btn-outline-primary m-1" id="nav-proveedores"><i class="fas fa-truck"></i> Proveedores</button>
+      <button class="btn btn-outline-primary m-1" id="nav-ordenes"><i class="fas fa-shopping-cart"></i> Órdenes</button>
+      <button class="btn btn-outline-primary m-1" id="nav-reportes"><i class="fas fa-chart-line"></i> Reportes</button>
+    </div>
+
+    <!-- Contenido dinámico -->
+    <div id="content-area"></div>
+  </div>
+
+  <!-- JS -->
+  <script src="resources/jquery/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+  <script src="resources/sweetalert/sweetalert2.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Script de navegación -->
+  <script>
+    $(function () {
+      function activarNav(idActivo) {
+        $('button[id^="nav-"]').removeClass('active');
+        $('#' + idActivo).addClass('active');
+      }
+
+      function loadContent(vista, script) {
+        $('#content-area')
+          .fadeOut(100, function () {
+            $(this).load('app/views/admin/' + vista + '.html', function () {
+              $.getScript('app/controllers/admin/' + script + '.js')
+                .done(function () {
+                  $('#content-area').fadeIn(100);
+                })
+                .fail(function () {
+                  Swal.fire('Error', 'No se pudo cargar el controlador: ' + script + '.js', 'error');
+                });
+            });
+          });
+      }
+
+      // Cargar vista por defecto
+      loadContent('dashboard', 'dashboard');
+      activarNav('nav-dashboard');
+
+      // Eventos de navegación
+      $('#nav-dashboard').click(function () {
+        activarNav('nav-dashboard');
+        loadContent('dashboard', 'dashboard');
+      });
+
+      $('#nav-usuarios').click(function () {
+        activarNav('nav-usuarios');
+        loadContent('usuarios', 'usuarios');
+      });
+
+      $('#nav-productos').click(function () {
+        activarNav('nav-productos');
+        loadContent('productos', 'productos');
+      });
+
+      $('#nav-proveedores').click(function () {
+        activarNav('nav-proveedores');
+        loadContent('proveedores', 'proveedores');
+      });
+
+      $('#nav-ordenes').click(function () {
+        activarNav('nav-ordenes');
+        loadContent('ordenes', 'ordenes');
+      });
+
+      $('#nav-reportes').click(function () {
+        activarNav('nav-reportes');
+        loadContent('reportes', 'reportes');
+      });
+    });
+  </script>
+</body>
+</html>

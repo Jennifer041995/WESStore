@@ -1,5 +1,5 @@
 <?php
-// C:\xampp1\htdocs\WESStore\app\models\PDF\PdfGenerator.php
+// C:\xampp1\htdocs\WESStore2\app\models\PDF\PdfGenerator.php
 
 require_once __DIR__ . '/../../../resources/dompdf/autoload.inc.php';
 

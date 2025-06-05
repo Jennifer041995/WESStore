@@ -1,24 +1,317 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="resources/sweetalert/sweetalert2.min.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500&display=swap" rel="stylesheet">
 
-<div class="container mt-5">
-    <h1 class="mb-4">🛒 Carrito de Compras</h1>
-    <div id="contenido-carrito"></div>
-    <!-- aqui se cargará el contenido del carrito -->
+<style>
+    :root {
+        --neon-blue: #0ff0fc;
+        --neon-purple: #9600ff;
+        --matrix-green: #00ff41;
+        --cyber-yellow: #f5d300;
+        --dark-space: #0a0a1a;
+        --deep-space: #12122e;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--dark-space) 0%, #1a1a3a 100%);
+        color: #e0e0e0;
+        font-family: 'Rajdhani', sans-serif;
+        min-height: 100vh;
+    }
+
+    .cyberpunk-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.1;
+        background: 
+            radial-gradient(circle at 20% 30%, var(--neon-purple) 0%, transparent 40%),
+            radial-gradient(circle at 80% 70%, var(--neon-blue) 0%, transparent 40%);
+        pointer-events: none;
+    }
+
+    .cyberpunk-grid {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        background-image: 
+            linear-gradient(rgba(15, 240, 252, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(15, 240, 252, 0.05) 1px, transparent 1px);
+        background-size: 30px 30px;
+        pointer-events: none;
+    }
+
+    .container {
+        max-width: 1200px;
+        padding-top: 30px;
+    }
+
+    h1 {
+        font-family: 'Orbitron', sans-serif;
+        color: var(--neon-blue);
+        text-shadow: 0 0 10px rgba(15, 240, 252, 0.3);
+        letter-spacing: 1px;
+        border-bottom: 2px solid var(--neon-purple);
+        padding-bottom: 10px;
+        display: inline-block;
+    }
+
+    #contenido-carrito {
+        background: rgba(18, 18, 46, 0.7);
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(15, 240, 252, 0.1);
+        padding: 25px;
+        margin-bottom: 30px;
+        border: 1px solid rgba(15, 240, 252, 0.2);
+        backdrop-filter: blur(5px);
+    }
+
+    /* Estilos para los items del carrito */
+    .cart-item {
+        border-bottom: 1px solid rgba(15, 240, 252, 0.1);
+        padding: 20px 0;
+        transition: all 0.3s;
+    }
+
+    .cart-item:hover {
+        background: rgba(15, 240, 252, 0.05);
+    }
+
+    .cart-item-img {
+        width: 80px;
+        height: 80px;
+        object-fit: contain;
+        border-radius: 5px;
+        border: 1px solid rgba(15, 240, 252, 0.3);
+    }
+
+    .cart-item-title {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 500;
+        color: white;
+        margin-bottom: 5px;
+        letter-spacing: 0.5px;
+    }
+
+    .cart-item-price {
+        font-weight: 700;
+        color: var(--neon-blue);
+    }
+
+    .cart-item-quantity {
+        display: flex;
+        align-items: center;
+    }
+
+    .quantity-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: rgba(15, 240, 252, 0.1);
+        border: 1px solid var(--neon-blue);
+        color: var(--neon-blue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .quantity-btn:hover {
+        background: rgba(15, 240, 252, 0.3);
+        box-shadow: 0 0 10px rgba(15, 240, 252, 0.3);
+    }
+
+    .quantity-input {
+        width: 50px;
+        text-align: center;
+        margin: 0 10px;
+        border: 1px solid rgba(15, 240, 252, 0.3);
+        border-radius: 5px;
+        padding: 5px;
+        background: rgba(10, 10, 26, 0.8);
+        color: white;
+    }
+
+    .remove-item {
+        color: var(--cyber-yellow);
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .remove-item:hover {
+        transform: scale(1.1);
+        color: #ff3333;
+    }
+
+    .cart-summary {
+        background: rgba(18, 18, 46, 0.7);
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(15, 240, 252, 0.1);
+        padding: 25px;
+        margin-top: 20px;
+        border: 1px solid rgba(15, 240, 252, 0.2);
+    }
+
+    .summary-title {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 600;
+        color: var(--neon-blue);
+        border-bottom: 2px solid var(--neon-purple);
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
+
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        color: #e0e0e0;
+    }
+
+    .summary-total {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 700;
+        font-size: 1.2rem;
+        color: var(--neon-blue);
+        border-top: 2px solid var(--neon-purple);
+        padding-top: 10px;
+        margin-top: 15px;
+    }
+
+    .btn-checkout {
+        background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+        border: none;
+        border-radius: 30px;
+        padding: 12px 30px;
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: all 0.3s;
+        margin-top: 20px;
+        color: var(--dark-space);
+        text-transform: uppercase;
+    }
+
+    .btn-checkout:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(15, 240, 252, 0.4);
+    }
+
+    /* Modal de Checkout */
+    #checkoutModal .modal-content {
+        background: var(--deep-space);
+        border: 1px solid var(--neon-blue);
+        color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 0 30px rgba(15, 240, 252, 0.4);
+    }
+
+    #checkoutModal .modal-header {
+        background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+        color: var(--dark-space);
+        border-bottom: none;
+    }
+
+    #checkoutModal .modal-title {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    #checkoutModal .close {
+        color: var(--dark-space);
+        opacity: 0.8;
+        text-shadow: none;
+    }
+
+    #checkoutModal .close:hover {
+        opacity: 1;
+    }
+
+    /* Estado cuando el carrito está vacío */
+    .empty-cart {
+        text-align: center;
+        padding: 50px 0;
+    }
+
+    .empty-cart-icon {
+        font-size: 5rem;
+        color: rgba(15, 240, 252, 0.2);
+        margin-bottom: 20px;
+    }
+
+    .empty-cart-message {
+        font-size: 1.2rem;
+        color: rgba(224, 224, 224, 0.6);
+    }
+
+    /* Efectos neon */
+    .neon-text {
+        text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+    }
+
+    @media (max-width: 768px) {
+        .cart-item {
+            flex-direction: column;
+        }
+        
+        .cart-item-img {
+            margin-bottom: 15px;
+        }
+        
+        .cart-item-quantity {
+            margin: 15px 0;
+            justify-content: center;
+        }
+    }
+</style>
+
+<div class="cyberpunk-grid"></div>
+<div class="cyberpunk-bg"></div>
+
+<div class="container mt-4">
+    <h1 class="mb-4"><i class="fas fa-shopping-cart"></i> CARRITO DE COMPRAS</h1>
+    <div id="contenido-carrito">
+        <!-- Ejemplo de estructura que se cargará dinámicamente -->
+        <div class="empty-cart">
+            <div class="empty-cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="empty-cart-message">
+                TU CARRITO ESTÁ VACÍO
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal de Checkout -->
 <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
     <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="checkoutModalLabel">Finalizar Compra</h5>
+      <div class="modal-header">
+        <h5 class="modal-title" id="checkoutModalLabel"><i class="fas fa-credit-card"></i> FINALIZAR COMPRA</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" id="checkout-container">
-        <!-- Carga aquí checkout.html -->
+        <!-- Contenido se cargará dinámicamente desde checkout.html -->
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+            <p class="mt-3">CARGANDO FORMULARIO DE PAGO...</p>
+        </div>
       </div>
     </div>
   </div>

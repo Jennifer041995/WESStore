@@ -13,8 +13,8 @@ if (!isset($_GET['pedido_id'])) {
 $pedido_id = (int)$_GET['pedido_id'];
 
 // Ruta base donde se guardan las facturas (ajusta según tu estructura real)
-// Desde app/controllers, sube dos niveles (a WESStore/) y luego baja a public/invoices/
-$invoice_dir = __DIR__ . '/../../media/invoices/';
+// Desde app/controllers, sube dos niveles (a WESStore2/) y luego baja a public/invoices/
+$invoice_dir = __DIR__ . '/../../media/temp/invoices/';
 $file_name = "factura-pedido-{$pedido_id}.pdf";
 $file_path = $invoice_dir . $file_name;
 

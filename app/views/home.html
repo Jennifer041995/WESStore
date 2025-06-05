@@ -1,32 +1,104 @@
-<div class="jumbotron text-center text-white shadow position-relative overflow-hidden p-0" 
-     style="
-        height: 100vh;
-        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
-                    url('media/img/imagen.png') center/cover;
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 0 !important;">
+<div class="jumbotron tech-hero position-relative overflow-hidden p-0 d-flex align-items-center justify-content-center">
+    <!-- Canvas para partículas -->
+    <canvas id="techParticles" class="position-absolute" style="z-index: 1;"></canvas>
     
-    <div class="position-relative" style="z-index: 2;">
-        <h1 class="display-4">¡Bienvenido a WES Store!</h1>
-        <p class="lead">Tu tienda de tecnología: computadoras, laptops, celulares, accesorios y más.</p>
-        <hr class="my-4 border-light">
-        <p>Explora nuestras categorías y descubre las mejores marcas del mercado.</p>
+    <div class="tech-hero-content text-center position-relative" style="z-index: 2;">
+        <h1 class="tech-title display-4 mb-4">
+            <span class="tech-glow">¡BIENVENIDO A WES STORE!</span>
+        </h1>
+        <p class="tech-hero-content lead mb-4">
+            TU TIENDA DE TECNOLOGÍA: <span class="tech-glow">COMPUTADORAS</span>, 
+            <span class="tech-glow">LAPTOPS</span>, 
+            <span class="tech-glow">CELULARES</span> 
+            Y MÁS.
+        </p>
+        <div class="tech-divider mx-auto my-4"></div>
+        <!-- Texto con puntos de lista futuristas -->
+        <p style="
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;">
+            <span style="color: var(--neon-blue);">◆</span> Explora nuestras categorías<br>
+            <span style="color: var(--neon-purple);">◆</span> Descubre las mejores marcas<br>
+            <span style="color: var(--matrix-green);">◆</span> Tecnología de última generación
+        </p>
+        
+        <a href="?mod=productos" class="btn btn-tech mt-4">
+            <i class="fas fa-arrow-right mr-2"></i> VER PRODUCTOS
+        </a>
     </div>
 </div>
 
 <style>
-    body, html {
-        margin: 0;
-        padding: 0;
-        overflow-x: hidden;
-    }
-    
-    .jumbotron {
-        min-height: 100vh !important;
+    /* === Estilo Tech (previo) === */
+    .tech-hero {
+        height: 100vh !important;
         width: 100vw !important;
         margin-left: calc(-50vw + 50%) !important;
+        background: linear-gradient(rgba(10, 10, 26, 0.85), rgba(22, 33, 62, 0.85)), 
+                    url('media/img/imagen.png') center/cover no-repeat !important;
+        border-radius: 0 !important;
+        overflow: hidden;
     }
+
+    /* ... (otros estilos previos se mantienen igual) ... */
 </style>
+
+<!-- Script de partículas -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const canvas = document.getElementById('techParticles');
+        const ctx = canvas.getContext('2d');
+        
+        // Ajustar tamaño del canvas
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        // Configuración de partículas
+        const particles = [];
+        const particleCount = 100;
+        const colors = ['#0ff0fc', '#9600ff', '#00ff41', '#f5d300'];
+        
+        // Crear partículas
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                size: Math.random() * 3 + 1,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                speedX: (Math.random() - 0.5) * 0.5,
+                speedY: (Math.random() - 0.5) * 0.5
+            });
+        }
+        
+        // Animación
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(particle => {
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                ctx.fillStyle = particle.color;
+                ctx.globalAlpha = 0.8;
+                ctx.fill();
+                
+                // Mover partículas
+                particle.x += particle.speedX;
+                particle.y += particle.speedY;
+                
+                // Rebotar en bordes
+                if (particle.x < 0 || particle.x > canvas.width) particle.speedX *= -1;
+                if (particle.y < 0 || particle.y > canvas.height) particle.speedY *= -1;
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+        
+        animateParticles();
+        
+        // Redimensionar
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    });
+</script>

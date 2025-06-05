@@ -1,0 +1,211 @@
+<!-- app/views/empleados/ordenes.html -->
+
+<!-- 1) ESTILOS LOCALES PARA “Órdenes de Cliente” -->
+<style>
+  /* CONTENEDOR PRINCIPAL: semitransparente + blur + neón */
+  .orders-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    padding: 25px;
+    margin: 20px 0;
+    backdrop-filter: blur(4px);
+  }
+
+  /* CARD PERSONALIZADA: transparente con borde neón tenue */
+  .orders-card {
+    background: transparent;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+    color: #e0e0e0;
+  }
+
+  /* HEADER DE CARD: fondo semineón oscuro + borde neón cian */
+  .orders-card .card-header {
+    background: rgba(0, 0, 0, 0.7);
+    border-bottom: 2px solid #00ffff;
+    color: #00ffff;
+    font-weight: 600;
+    text-shadow: 0 0 5px #00ffff;
+  }
+  .orders-card .card-header h5 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  /* FORMULARIO INLINE: inputs oscuros y borde neón */
+  .orders-card .form-inline .form-control {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    color: #e0e0e0;
+    margin-right: 1rem;
+  }
+  .orders-card .form-inline .form-control:focus {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: #00ffff;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.4);
+    color: #e0e0e0;
+  }
+  .orders-card .form-inline label {
+    color: #e0e0e0;
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+
+  /* BOTONES: neón cian y contraste */
+  .orders-card .btn-secondary {
+    background: transparent;
+    color: #00ffff;
+    border: 1px solid #00ffff;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease-in-out;
+    margin-right: 1rem;
+  }
+  .orders-card .btn-secondary:hover {
+    background: #00ffff;
+    color: #000;
+    box-shadow: 0 0 10px #00ffff;
+  }
+
+  .orders-card .btn-primary {
+    background: #00ffff;
+    color: #000;
+    border: none;
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease-in-out;
+  }
+  .orders-card .btn-primary:hover {
+    background: #00e0e0;
+    box-shadow: 0 0 10px #00ffff;
+  }
+
+  /* TABLA: transparente + bordes/neón + texto claro */
+  .orders-card .table-responsive {
+    overflow-x: auto;
+  }
+  #tbl-ordenes-empleado {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  /* Cabecera de tabla: semitransparente cian tenue */
+  #tbl-ordenes-empleado thead th {
+    background: rgba(0, 255, 255, 0.1);
+    color: #e0e0e0;
+    font-weight: 600;
+    padding: 12px;
+    position: sticky;
+    top: 0;
+    border-bottom: 2px solid #00ffff;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+  /* Filas: alternar tonos semitransparentes sobre el fondo oscuro */
+  #tbl-ordenes-empleado tbody tr {
+    background: rgba(255, 255, 255, 0.02);
+    transition: background 0.2s ease;
+  }
+  #tbl-ordenes-empleado tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.04);
+  }
+  #tbl-ordenes-empleado tbody tr:hover {
+    background: rgba(0, 255, 255, 0.05);
+  }
+  /* Celdas: texto claro y bordes tenues */
+  #tbl-ordenes-empleado td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    vertical-align: middle;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+  }
+
+  /* SCROLLBAR personalizado */
+  .orders-card .table-responsive::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  .orders-card .table-responsive::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+  .orders-card .table-responsive::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+  .orders-card .table-responsive::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+</style>
+
+<!-- 2) CONTENIDO: Órdenes de Cliente -->
+<div class="orders-container">
+  <div class="card orders-card">
+    <!-- Header cian neón -->
+    <div class="card-header">
+      <h5 class="mb-0">Órdenes de Cliente</h5>
+    </div>
+
+    <div class="card-body">
+      <!-- Formulario inline: Desde/Hasta + botones -->
+      <div class="form-inline mb-3">
+        <label for="ord_fecha_ini">Desde:</label>
+        <input
+          type="date"
+          id="ord_fecha_ini"
+          class="form-control"
+        />
+
+        <label for="ord_fecha_fin">Hasta:</label>
+        <input
+          type="date"
+          id="ord_fecha_fin"
+          class="form-control"
+        />
+
+        <button
+          id="btn-filtar-ordenes-emp"
+          class="btn btn-secondary"
+        >
+          Filtrar
+        </button>
+
+        <button
+          id="btn-generar-ordenes-emp"
+          class="btn btn-primary ml-auto"
+        >
+          <i class="fas fa-file-export"></i> Generar Informe
+        </button>
+      </div>
+
+      <!-- Tabla transparente con bordes neón -->
+      <div class="table-responsive">
+        <table
+          class="table table-borderless mb-0"
+          id="tbl-ordenes-empleado"
+        >
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Total ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- … más filas dinámicas … -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

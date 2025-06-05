@@ -34,7 +34,7 @@ if (n === 1) {
     if (!telefono || !telefonoRegex.test(telefono)) {
         Swal.fire('Teléfono inválido', 'El número debe tener 8 dígitos', 'warning');
         return false;
-    }
+    } 
 }
 
         if (n === 2) {

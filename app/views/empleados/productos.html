@@ -1,0 +1,241 @@
+<!-- app/views/empleados/productos.html -->
+
+<!-- 1) ESTILOS LOCALES: Sobreescribir fondos claros y aplicar diseño oscuro/neón -->
+<style>
+  /* CONTENEDOR PRINCIPAL: semitransparente + blur + neón */
+  .product-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    padding: 25px;
+    margin: 20px 0;
+    backdrop-filter: blur(4px);
+  }
+
+  /* CARD PERSONALIZADA: fondo transparente con borde neón sutil */
+  .product-card {
+    background: transparent;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+    color: #e0e0e0;
+  }
+
+  /* CABECERA DE LA TARJETA: fondo oscuro + borde neón */
+  .product-card .card-header {
+    background: rgba(0, 0, 0, 0.7);
+    border-bottom: 2px solid #00ffff;
+    color: #00ffff;
+    font-weight: 600;
+    text-shadow: 0 0 5px #00ffff;
+    padding: 15px 20px;
+  }
+  .product-card .card-header h5 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  .product-card .card-header i {
+    margin-right: 10px;
+    color: #00ffff;
+    text-shadow: 0 0 5px #00ffff;
+  }
+
+  /* BARRA DE BÚSQUEDA: inputs oscuros + borde neón, botones neón */
+  .product-search-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  .product-search-container input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 10px 15px;
+    color: #e0e0e0;
+    transition: all 0.3s;
+  }
+  .product-search-container input[type="text"]::placeholder {
+    color: rgba(224, 224, 224, 0.6);
+  }
+  .product-search-container input[type="text"]:focus {
+    border-color: #00ffff;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.02);
+    color: #e0e0e0;
+  }
+  .product-search-container .btn {
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease-in-out;
+  }
+  .product-search-container #btn-buscar-productos {
+    background: transparent;
+    color: #00ffff;
+    border: 1px solid #00ffff;
+    padding: 10px 20px;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+  }
+  .product-search-container #btn-buscar-productos:hover {
+    background: #00ffff;
+    color: #000;
+    box-shadow: 0 0 10px #00ffff;
+    transform: translateY(-2px);
+  }
+  .product-search-container #btn-reset-productos {
+    background: transparent;
+    color: #e0e0e0;
+    border: 1px solid rgba(224, 224, 224, 0.3);
+    padding: 10px 20px;
+    box-shadow: 0 0 5px rgba(224, 224, 224, 0.2);
+  }
+  .product-search-container #btn-reset-productos:hover {
+    background: rgba(224, 224, 224, 0.2);
+    color: #000;
+    border-color: rgba(224, 224, 224, 0.5);
+  }
+
+  /* TABLA DE PRODUCTOS: transparente + bordes/neón + texto claro */
+  .product-card .table-responsive {
+    overflow-x: auto;
+  }
+  #tbl-productos-empleado {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  /* CABECERA DE LA TABLA: semitransparente cian tenue, texto claro */
+  #tbl-productos-empleado thead th {
+    background: rgba(0, 255, 255, 0.1);
+    color: #e0e0e0;
+    font-weight: 600;
+    padding: 12px 15px;
+    position: sticky;
+    top: 0;
+    border-bottom: 2px solid #00ffff;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+  /* FILAS: alternar tonos semitransparentes sobre fondo oscuro */
+  #tbl-productos-empleado tbody tr {
+    background: rgba(255, 255, 255, 0.02);
+    transition: background 0.2s ease;
+  }
+  #tbl-productos-empleado tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.04);
+  }
+  #tbl-productos-empleado tbody tr:hover {
+    background: rgba(0, 255, 255, 0.05);
+  }
+  /* CELDAS: texto claro y bordes tenues */
+  #tbl-productos-empleado td {
+    padding: 12px 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    vertical-align: middle;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+  }
+  /* PRECIO en neón verde */
+  #tbl-productos-empleado td:nth-child(5) {
+    font-weight: 600;
+    color: #22aa22;
+  }
+  /* STOCK en color blanco claro */
+  #tbl-productos-empleado td:nth-child(6) {
+    font-weight: 500;
+    color: #e0e0e0;
+  }
+
+  /* SCROLLBAR personalizado */
+  .product-card .table-responsive::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  .product-card .table-responsive::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+  .product-card .table-responsive::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+  .product-card .table-responsive::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  /* MENSAJE CUANDO NO HAY PRODUCTOS */
+  .no-products-message {
+    text-align: center;
+    padding: 30px;
+    color: rgba(224, 224, 224, 0.6);
+  }
+  .no-products-message i {
+    font-size: 2.5rem;
+    color: rgba(224, 224, 224, 0.3);
+    margin-bottom: 15px;
+  }
+</style>
+
+<!-- 2) CONTENIDO: Listado de Productos -->
+<div class="product-container">
+  <div class="card product-card">
+    <!-- Cabecera con neón cian -->
+    <div class="card-header">
+      <h5 class="mb-0">
+        <i class="fas fa-boxes"></i> Listado de Productos (Solo Lectura)
+      </h5>
+    </div>
+
+    <div class="card-body">
+      <!-- Barra de búsqueda -->
+      <div class="product-search-container">
+        <input
+          type="text"
+          id="filtro-productos"
+          class="form-control"
+          placeholder="Buscar por nombre..."
+        />
+        <button id="btn-buscar-productos" class="btn btn-secondary">
+          <i class="fas fa-search mr-1"></i> Buscar
+        </button>
+        <button id="btn-reset-productos" class="btn btn-light">
+          <i class="fas fa-undo mr-1"></i> Limpiar
+        </button>
+      </div>
+
+      <!-- Tabla transparente con bordes/neón -->
+      <div class="table-responsive">
+        <table
+          class="table table-borderless mb-0"
+          id="tbl-productos-empleado"
+        >
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>SKU</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Precio ($)</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- … más filas dinámicas … -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Mensaje cuando no hay productos -->
+      <div class="no-products-message" style="display: none;">
+        <i class="fas fa-box-open"></i>
+        <p>No hay productos disponibles.</p>
+      </div>
+    </div>
+  </div>
+</div>
