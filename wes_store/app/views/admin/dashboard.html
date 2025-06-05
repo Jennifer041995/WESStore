@@ -1,0 +1,125 @@
+<!-- dashboard.html -->
+<div class="container text-white">
+  <!-- Título con estilo neón -->
+  <h4 class="mb-4 titulo-neon">Dashboard General</h4>
+
+  <!-- 1. Cards de resumen -->
+  <div class="row text-center mb-4">
+    <div class="col-md-2 mb-3">
+      <div class="card text-white shadow-sm" style="background-color: rgba(0, 255, 255, 0.1); border: 1px solid #0ff;">
+        <div class="card-body">
+          <h6>Productos</h6>
+          <h3 id="total-productos">0</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-3">
+      <div class="card text-white shadow-sm" style="background-color: rgba(0, 255, 0, 0.1); border: 1px solid #0f0;">
+        <div class="card-body">
+          <h6>Proveedores</h6>
+          <h3 id="total-proveedores">0</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-3">
+      <div class="card text-white shadow-sm" style="background-color: rgba(255, 255, 0, 0.1); border: 1px solid #ff0;">
+        <div class="card-body">
+          <h6>Órdenes</h6>
+          <h3 id="total-ordenes">0</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-3">
+      <div class="card text-white shadow-sm" style="background-color: rgba(255, 0, 0, 0.1); border: 1px solid #f00;">
+        <div class="card-body">
+          <h6>Ingresos ($)</h6>
+          <h3 id="total-ingresos">0.00</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-3">
+      <div class="card text-white shadow-sm" style="background-color: rgba(0, 0, 255, 0.1); border: 1px solid #00f;">
+        <div class="card-body">
+          <h6>Clientes</h6>
+          <h3 id="total-clientes">0</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2 mb-3">
+      <div class="card text-white shadow-sm" style="background-color: rgba(128, 128, 128, 0.1); border: 1px solid #ccc;">
+        <div class="card-body">
+          <h6>Usuarios Admin</h6>
+          <h3 id="total-admin">0</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Gráficos y productos -->
+  <div class="row mb-4">
+    <div class="col-md-6 mb-3">
+      <div class="card bg-transparent border border-info text-white">
+        <div class="card-header border-info">Órdenes por Mes</div>
+        <div class="card-body">
+          <canvas id="grafico-ordenes" height="120"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <div class="card bg-transparent border border-warning text-white">
+        <div class="card-header border-warning">Pendientes vs Entregadas</div>
+        <div class="card-body">
+          <canvas id="grafico-pendientes-entregadas" height="120"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <div class="card bg-transparent border border-success text-white">
+        <div class="card-header border-success">Producto Más Vendido</div>
+        <div class="card-body text-center" id="producto-mas-vendido">
+          <p>Cargando...</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <div class="card bg-transparent border border-danger text-white">
+        <div class="card-header border-danger">Cliente Más Frecuente</div>
+        <div class="card-body text-center" id="cliente-mas-frecuente">
+          <p>Cargando...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Últimas órdenes -->
+  <div class="card bg-transparent border border-light text-white">
+    <div class="card-header">Últimas 5 Órdenes</div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-sm table-dark table-striped">
+          <thead>
+            <tr>
+              <th>#Pedido</th>
+              <th>Cliente</th>
+              <th>Fecha</th>
+              <th>Total ($)</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-ultimas-ordenes">
+            <!-- Se llena via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Estilo específico de esta vista -->
+<style>
+  .titulo-neon {
+    color: #ff4081;
+    font-weight: 900;
+    text-shadow: 0 0 5px #ff4081, 0 0 10px #ff4081, 0 0 20px #ff4081;
+  }
+</style>

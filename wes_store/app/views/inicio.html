@@ -1,0 +1,534 @@
+<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/sweetalert/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    :root {
+        --neon-blue: #0ff0fc;
+        --neon-purple: #9600ff;
+        --matrix-green: #00ff41;
+        --cyber-yellow: #f5d300;
+        --dark-space: #0a0a1a;
+        --deep-space: #12122e;
+    }
+    
+    body {
+        background-color: var(--dark-space);
+        font-family: 'Rajdhani', sans-serif;
+        color: #e0e0e0;
+    }
+    
+    .container {
+        max-width: 1200px;
+    }
+    
+    /* === Carrusel Futurista === */
+    #mainCarousel {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(15, 240, 252, 0.2);
+        margin-bottom: 3rem;
+        border: 1px solid rgba(15, 240, 252, 0.3);
+        position: relative;
+    }
+    
+    .carousel-inner {
+        border-radius: 8px;
+    }
+    
+    .carousel-item img {
+        height: 400px;
+        object-fit: cover;
+        filter: brightness(0.7);
+    }
+    
+    .carousel-caption {
+        bottom: 25%;
+        text-align: left;
+        left: 10%;
+        right: auto;
+        width: 40%;
+        background: rgba(10, 10, 26, 0.7);
+        padding: 20px;
+        border-left: 4px solid var(--neon-blue);
+    }
+    
+    .carousel-caption h5 {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.8rem;
+        color: var(--neon-blue);
+        text-shadow: 0 0 10px rgba(15, 240, 252, 0.5);
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
+    }
+    
+    .carousel-caption p {
+        font-size: 1.1rem;
+        text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+    
+    .carousel-indicators li {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(255,255,255,0.3);
+        margin: 0 6px;
+        border: none;
+    }
+    
+    .carousel-indicators .active {
+        background-color: var(--neon-blue);
+        box-shadow: 0 0 10px var(--neon-blue);
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5%;
+        opacity: 0.7;
+        transition: all 0.3s;
+    }
+    
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        opacity: 1;
+    }
+    
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        background-size: 100% 100%;
+        background-color: rgba(15, 240, 252, 0.2);
+        border-radius: 50%;
+        border: 1px solid var(--neon-blue);
+    }
+    
+    /* === Secciones === */
+    section {
+        margin-bottom: 4rem;
+        position: relative;
+    }
+    
+    h2 {
+        font-family: 'Orbitron', sans-serif;
+        color: var(--neon-blue);
+        font-weight: 600;
+        position: relative;
+        padding-bottom: 15px;
+        text-align: center;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 2.5rem !important;
+    }
+    
+    h2 i {
+        margin-right: 10px;
+    }
+    
+    h2:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--neon-blue), transparent);
+        border-radius: 2px;
+    }
+    
+    /* === Sliders Tech === */
+    #categorias-list,
+    #marcas-list {
+        position: relative;
+        padding: 20px 0;
+    }
+    
+    /* Tarjeta de categoría */
+    .category-card {
+        background: rgba(18, 18, 46, 0.7);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 0 15px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        transition: all 0.4s ease;
+        border: 1px solid rgba(15, 240, 252, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .category-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 25px rgba(15, 240, 252, 0.3);
+        border-color: var(--neon-blue);
+    }
+    
+    .category-card::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        z-index: -1;
+        background: linear-gradient(45deg, var(--neon-blue), var(--neon-purple));
+        opacity: 0;
+        transition: opacity 0.4s;
+    }
+    
+    .category-card:hover::before {
+        opacity: 0.3;
+    }
+    
+    .category-img {
+        width: 100%;
+        height: 120px;
+        object-fit: contain;
+        margin-bottom: 15px;
+        filter: drop-shadow(0 0 5px rgba(15, 240, 252, 0.5));
+    }
+    
+    .category-title {
+        font-weight: 600;
+        color: white;
+        margin-bottom: 0;
+        font-size: 1.1rem;
+        letter-spacing: 1px;
+    }
+    
+    /* Tarjeta de marca */
+    .brand-card {
+        background: rgba(18, 18, 46, 0.7);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 0 15px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        transition: all 0.4s ease;
+        border: 1px solid rgba(150, 0, 255, 0.2);
+    }
+    
+    .brand-card:hover {
+        transform: scale(1.05);
+        border-color: var(--neon-purple);
+        box-shadow: 0 10px 25px rgba(150, 0, 255, 0.3);
+    }
+    
+    .brand-img {
+        width: 100%;
+        height: 80px;
+        object-fit: contain;
+        filter: grayscale(100%) brightness(1.5);
+        opacity: 0.7;
+        transition: all 0.4s;
+    }
+    
+    .brand-card:hover .brand-img {
+        filter: grayscale(0%) brightness(1);
+        opacity: 1;
+    }
+    
+    /* Controles del slider */
+    .tns-controls button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(15, 240, 252, 0.2);
+        border: 1px solid var(--neon-blue);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        z-index: 10;
+        color: var(--neon-blue);
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+    }
+    
+    .tns-controls button:hover {
+        background: var(--neon-blue);
+        color: var(--dark-space);
+        box-shadow: 0 0 15px var(--neon-blue);
+    }
+    
+    .tns-controls button[data-controls="prev"] {
+        left: -20px;
+    }
+    
+    .tns-controls button[data-controls="next"] {
+        right: -20px;
+    }
+    
+    /* Spinner de carga */
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+        border-width: 0.25em;
+        color: var(--neon-blue);
+    }
+    
+    /* === Responsive === */
+    @media (max-width: 768px) {
+        .carousel-item img {
+            height: 250px;
+        }
+        
+        .carousel-caption {
+            bottom: 10%;
+            width: 80%;
+        }
+        
+        .carousel-caption h5 {
+            font-size: 1.3rem;
+        }
+        
+        .tns-controls button {
+            width: 30px;
+            height: 30px;
+            font-size: 1rem;
+        }
+        
+        .tns-controls button[data-controls="prev"] {
+            left: -10px;
+        }
+        
+        .tns-controls button[data-controls="next"] {
+            right: -10px;
+        }
+        
+        .category-card, .brand-card {
+            margin: 0 8px;
+        }
+    }
+</style>
+<style>
+    /* === Tarjetas de Categorías Tech === */
+    .tech-category-card {
+        background: rgba(18, 18, 46, 0.7);
+        border-radius: 8px;
+        padding: 25px;
+        margin: 0 10px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s ease;
+        border: 1px solid rgba(15, 240, 252, 0.2);
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .tech-category-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(15, 240, 252, 0.2);
+        border-color: var(--neon-blue);
+    }
+
+    .tech-category-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            to bottom right,
+            transparent 45%,
+            rgba(15, 240, 252, 0.1) 50%,
+            transparent 55%
+        );
+        transform: rotate(30deg);
+        transition: all 0.6s;
+    }
+
+    .tech-category-card:hover::before {
+        animation: shine 1.5s infinite;
+    }
+
+    @keyframes shine {
+        0% { left: -50%; }
+        100% { left: 150%; }
+    }
+
+    .tech-category-icon {
+        font-size: 2.5rem;
+        color: var(--neon-blue);
+        margin-bottom: 15px;
+        filter: drop-shadow(0 0 5px rgba(15, 240, 252, 0.7));
+    }
+
+    .tech-category-title {
+        font-family: 'Orbitron', sans-serif;
+        color: white;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    .tech-category-desc {
+        color: #b8b8b8;
+        font-size: 0.9rem;
+    }
+
+    /* === Tarjetas de Marcas Tech === */
+    .tech-brand-card {
+        background: rgba(18, 18, 46, 0.7);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 0 10px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        transition: all 0.4s ease;
+        border: 1px solid rgba(150, 0, 255, 0.2);
+        height: 100%;
+    }
+
+    .tech-brand-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(150, 0, 255, 0.3);
+        border-color: var(--neon-purple);
+    }
+
+    .tech-brand-logo {
+        max-height: 60px;
+        width: auto;
+        filter: grayscale(100%) brightness(1.5);
+        opacity: 0.8;
+        transition: all 0.4s;
+    }
+
+    .tech-brand-card:hover .tech-brand-logo {
+        filter: grayscale(0%) brightness(1);
+        opacity: 1;
+    }
+
+    .tech-brand-name {
+        font-family: 'Rajdhani', sans-serif;
+        color: white;
+        margin-top: 10px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+</style>
+
+<div class="container mt-5">
+    <!-- Carrusel de banners futurista -->
+    <div id="mainCarousel" class="carousel slide mb-4" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#mainCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#mainCarousel" data-slide-to="1"></li>
+            <li data-target="#mainCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner rounded">
+            <div class="carousel-item active">
+                <img src="media/img/imagen.png" class="d-block w-100" alt="Banner 1">
+                <div class="carousel-caption">
+                    <h5><i class="fas fa-bolt"></i> PROMOCIONES ESPECIALES</h5>
+                    <p>Descuentos exclusivos esta semana</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="media/img/logo.png" class="d-block w-100" alt="Banner 2">
+                <div class="carousel-caption">
+                    <h5><i class="fas fa-star"></i> NUEVOS PRODUCTOS</h5>
+                    <p>Descubre nuestras últimas novedades</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="media/img/ico.png" class="d-block w-100" alt="Banner 3">
+                <div class="carousel-caption">
+                    <h5><i class="fas fa-truck"></i> ENVÍO GRATIS</h5>
+                    <p>En compras mayores a $50</p>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+        </a>
+    </div>
+
+    <!-- CATEGORÍAS -->
+    <section>
+        <h2 class="mb-4"><i class="fas fa-microchip"></i> CATEGORÍAS</h2>
+        <div id="categorias-list" class="position-relative">
+            <div class="tns-controls">
+                <button data-controls="prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                <button data-controls="next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <!-- Las categorías se cargarán dinámicamente aquí -->
+            <div class="text-center py-4">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Cargando...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUBCATEGORÍAS -->
+    <section>
+        <h2 class="mb-4"><i class="fas fa-list"></i> SUBCATEGORÍAS</h2>
+        <div id="subcategorias-list" class="position-relative">
+            <div class="tns-controls">
+                <button data-controls="prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                <button data-controls="next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <!-- Se cargan dinámicamente aquí -->
+            <div class="text-center py-4">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Cargando...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTOS DESTACADOS -->
+    <section>
+        <h2 class="mb-4"><i class="fas fa-fire"></i> PRODUCTOS DESTACADOS</h2>
+        <div id="productos-destacados-list" class="position-relative">
+            <div class="tns-controls">
+                <button data-controls="prev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+                <button data-controls="next" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <!-- Se cargan dinámicamente aquí -->
+            <div class="text-center py-4">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Cargando...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARCAS -->
+    <section>
+        <h2 class="mb-4"><i class="fas fa-robot"></i> MARCAS DESTACADAS</h2>
+        <div id="marcas-list" class="position-relative">
+            <div class="tns-controls">
+                <button data-controls="prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                <button data-controls="next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <!-- Las marcas se cargarán dinámicamente aquí -->
+            <div class="text-center py-4">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Cargando...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="resources/jquery/jquery.min.js"></script>
+<script src="resources/popper/popper.min.js"></script>
+<script src="resources/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/sweetalert/sweetalert2.all.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/min/tiny-slider.js"></script>
+<script src="app/controllers/public/inicio.js"></script>

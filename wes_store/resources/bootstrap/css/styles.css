@@ -1,0 +1,221 @@
+/* Estilos generales */
+* {
+    box-sizing: border-box; /* Asegura que el padding y border estén dentro del tamaño total de los elementos */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    color: #0a0a0a;
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Títulos de secciones */
+.section-title {
+    position: relative;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100px;
+    height: 2px;
+    background-color: #007bff;
+}
+
+/* Estilos para la barra de navegación */
+.navbar-brand img {
+    transition: transform 0.3s;
+}
+
+.navbar-brand:hover img {
+    transform: scale(1.05);
+}
+
+/* Estilos para las tarjetas de productos */
+.product-card {
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-card .card-img-top {
+    height: 180px;
+    object-fit: contain;
+    padding: 15px;
+    background-color: #f8f9fa;
+}
+
+.product-card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    height: 40px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Estilos para el carrusel */
+.carousel {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.carousel-item img {
+    height: 400px;
+    object-fit: cover;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+}
+
+/* Estilos para responsive design */
+@media (max-width: 768px) {
+    .navbar-collapse {
+        margin-top: 15px;
+    }
+
+    .carousel-item img {
+        height: 250px;
+    }
+
+    .product-card .card-img-top {
+        height: 150px;
+    }
+}
+
+@media (max-width: 576px) {
+    .carousel-item img {
+        height: 200px;
+    }
+
+    .product-card {
+        margin-bottom: 20px;
+    }
+}
+
+/* Sección de productos destacados */
+.featured-products {
+    position: relative; /* Necesario para el posicionamiento */
+    width: 100%;
+}
+
+.inner-products {
+    position: relative;
+    left: 0;
+}
+
+.product-item {
+    display: inline-block;
+    vertical-align: top;
+    transition: transform 0.3s ease; /* Asegura que el efecto de hover sea suave */
+}
+
+/* Ajustes para las cards */
+.card {
+    width: 100%;       /* Ocupa todo el ancho del contenedor padre */
+    max-width: 200px;  /* Ancho máximo (ajústalo según tus necesidades) */
+    margin: 0 auto;    /* Centra la card si es necesario */
+    word-wrap: break-word; /* Rompe palabras largas */
+    background: #ebe8e8; /* Color de fondo opcional */
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.3s ease; /* Agregado para mayor consistencia */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Efecto hover opcional */
+}
+
+.card-title, .card-text {
+    white-space: normal; /* Permite saltos de línea */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Muestra "..." si el texto es muy largo */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Máximo 2 líneas (ajusta el número) */
+    line-clamp: 2; /* Propiedad estándar para compatibilidad */
+    -webkit-box-orient: vertical;
+}
+
+/* Contenedor de cada producto */
+.product-item {
+    display: inline-block;
+    width: 200px;      /* Mismo ancho que la card */
+    padding: 0 10px;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+/* Estilos para categorías */
+#category-section {
+    width: 100%;
+    background: #020070; /* Fondo opcional */
+}
+
+.inner-categories {
+    position: relative;
+    left: 0;
+}
+
+.category-item {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.category-header {
+    transition: all 0.3s;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.category-header:hover {
+    background-color: #f8f9fa;
+}
+
+/* Estilos para marcas */
+#brands-section {
+    background: #adacac; /* Fondo opcional */
+}
+
+.inner-brands {
+    position: relative;
+    left: 0;
+    transition: left 0.1s linear; /* Para suavizar en navegadores que lo soportan */
+}
+
+.brand-item {
+    transition: transform 0.3s;
+}
+
+.brand-item:hover .card {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Efecto hover */
+}

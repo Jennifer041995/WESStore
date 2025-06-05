@@ -1,0 +1,268 @@
+<div class="container">
+  <h4 class="mb-4">Reportes</h4>
+
+  <!-- Pestañas (ahora con todos los tipos) -->
+  <ul class="nav nav-tabs mb-3" id="tabs-reportes">
+    <li class="nav-item">
+      <a class="nav-link active" href="#" data-reporte="inventario">Inventario</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-reporte="ordenes">Órdenes</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-reporte="ventas_categoria">Ventas por Categoría</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-reporte="productos_menos_vendidos">Productos Menos Vendidos</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-reporte="clientes_top">Clientes Top</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-reporte="movimientos_inventario">Mov. Inventario</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-reporte="ordenes_pendientes">Órdenes Pendientes</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" data-reporte="margen">Margen Ganancia</a>
+    </li>
+  </ul>
+
+  <!-- Contenedor de cada reporte -->
+  <div id="contenido-reportes">
+    <!-- 1) Inventario -->
+    <div id="reporte-inventario">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5>Productos con Stock Mínimo</h5>
+        <button id="btn-generar-inventario" class="btn btn-sm btn-primary">
+          <i class="fas fa-file-export"></i> Generar Reporte
+        </button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm" id="tbl-reporte-inventario">
+          <thead class="thead-light">
+            <tr>
+              <th>ID</th>
+              <th>SKU</th>
+              <th>Nombre</th>
+              <th>Stock</th>
+              <th>Stock Mínimo</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 2) Órdenes -->
+    <div id="reporte-ordenes" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5>Órdenes de Compra por Fecha</h5>
+        <button id="btn-generar-ordenes" class="btn btn-sm btn-primary">
+          <i class="fas fa-file-export"></i> Generar Reporte
+        </button>
+      </div>
+      <div class="form-inline mb-3">
+        <label for="fecha_ini" class="mr-2">Desde:</label>
+        <input type="date" id="fecha_ini" class="form-control mr-4">
+        <label for="fecha_fin" class="mr-2">Hasta:</label>
+        <input type="date" id="fecha_fin" class="form-control mr-4">
+        <button id="btn-filtar-ordenes" class="btn btn-secondary">Filtrar</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm" id="tbl-reporte-ordenes">
+          <thead class="thead-light">
+            <tr>
+              <th>ID</th>
+              <th>N° Orden</th>
+              <th>Proveedor</th>
+              <th>Fecha</th>
+              <th>Estado</th>
+              <th>Total ($)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 3) Ventas por Categoría -->
+    <div id="reporte-ventas_categoria" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5>Ventas por Categoría</h5>
+        <button id="btn-generar-ventas_categoria" class="btn btn-sm btn-primary">
+          <i class="fas fa-file-export"></i> Generar Reporte
+        </button>
+      </div>
+      <div class="form-inline mb-3">
+        <label for="vc_fecha_ini" class="mr-2">Desde:</label>
+        <input type="date" id="vc_fecha_ini" class="form-control mr-4">
+        <label for="vc_fecha_fin" class="mr-2">Hasta:</label>
+        <input type="date" id="vc_fecha_fin" class="form-control mr-4">
+        <button id="btn-filtar-ventas_categoria" class="btn btn-secondary">Filtrar</button>
+      </div>
+      <div class="table-responsive mb-4">
+        <table class="table table-bordered table-sm" id="tbl-reporte-ventas_categoria">
+          <thead class="thead-light">
+            <tr>
+              <th>Categoría</th>
+              <th>Total Vendido ($)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div>
+        <canvas id="grafico-ventas_categoria" height="100"></canvas>
+      </div>
+    </div>
+
+    <!-- 4) Productos Menos Vendidos -->
+    <div id="reporte-productos_menos_vendidos" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5>Productos Menos Vendidos (Últimos 6 meses)</h5>
+        <button id="btn-generar-productos_menos_vendidos" class="btn btn-sm btn-primary">
+          <i class="fas fa-file-export"></i> Generar Reporte
+        </button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm" id="tbl-reporte-productos_menos_vendidos">
+          <thead class="thead-light">
+            <tr>
+              <th>ID</th>
+              <th>SKU</th>
+              <th>Nombre</th>
+              <th>Unidades Vendidas</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 5) Clientes Top -->
+    <div id="reporte-clientes_top" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5>Clientes Top (Rango Fechas)</h5>
+        <button id="btn-generar-clientes_top" class="btn btn-sm btn-primary">
+          <i class="fas fa-file-export"></i> Generar Reporte
+        </button>
+      </div>
+      <div class="form-inline mb-3">
+        <label for="ct_fecha_ini" class="mr-2">Desde:</label>
+        <input type="date" id="ct_fecha_ini" class="form-control mr-4">
+        <label for="ct_fecha_fin" class="mr-2">Hasta:</label>
+        <input type="date" id="ct_fecha_fin" class="form-control mr-4">
+        <button id="btn-filtar-clientes_top" class="btn btn-secondary">Filtrar</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm" id="tbl-reporte-clientes_top">
+          <thead class="thead-light">
+            <tr>
+              <th>Cliente</th>
+              <th>Cantidad Pedidos</th>
+              <th>Total Comprado ($)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 6) Movimientos de Inventario -->
+    <div id="reporte-movimientos_inventario" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5>Movimientos de Inventario (Últimos 100)</h5>
+        <button id="btn-generar-movimientos_inventario" class="btn btn-sm btn-primary">
+          <i class="fas fa-file-export"></i> Generar Reporte
+        </button>
+      </div>
+      <div class="form-inline mb-3">
+        <label for="mi_fecha_ini" class="mr-2">Desde:</label>
+        <input type="date" id="mi_fecha_ini" class="form-control mr-4">
+        <label for="mi_fecha_fin" class="mr-2">Hasta:</label>
+        <input type="date" id="mi_fecha_fin" class="form-control mr-4">
+        <button id="btn-filtar-movimientos_inventario" class="btn btn-secondary">Filtrar</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm" id="tbl-reporte-movimientos_inventario">
+          <thead class="thead-light">
+            <tr>
+              <th>ID</th>
+              <th>Producto</th>
+              <th>Tipo</th>
+              <th>Cantidad</th>
+              <th>Referencia</th>
+              <th>Usuario</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 7) Órdenes Pendientes -->
+    <div id="reporte-ordenes_pendientes" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5>Órdenes de Compra Pendientes/Parciales</h5>
+        <button id="btn-generar-ordenes_pendientes" class="btn btn-sm btn-primary">
+          <i class="fas fa-file-export"></i> Generar Reporte
+        </button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm" id="tbl-reporte-ordenes_pendientes">
+          <thead class="thead-light">
+            <tr>
+              <th>ID</th>
+              <th>N° Orden</th>
+              <th>Proveedor</th>
+              <th>Fecha</th>
+              <th>Fecha Esperada</th>
+              <th>Estado</th>
+              <th>Total ($)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 8) Margen de Ganancia -->
+    <div id="reporte-margen" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5>Margen de Ganancia (Rango Fechas)</h5>
+        <button id="btn-generar-margen" class="btn btn-sm btn-primary">
+          <i class="fas fa-file-export"></i> Generar Reporte
+        </button>
+      </div>
+      <div class="form-inline mb-3">
+        <label for="mg_fecha_ini" class="mr-2">Desde:</label>
+        <input type="date" id="mg_fecha_ini" class="form-control mr-4">
+        <label for="mg_fecha_fin" class="mr-2">Hasta:</label>
+        <input type="date" id="mg_fecha_fin" class="form-control mr-4">
+        <button id="btn-filtar-margen" class="btn btn-secondary">Filtrar</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered table-sm" id="tbl-reporte-margen">
+          <thead class="thead-light">
+            <tr>
+              <th>ID Producto</th>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Costo</th>
+              <th>Margen Unitario ($)</th>
+              <th>Unidades Vendidas</th>
+              <th>Margen Total ($)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js (para Ventas por Categoría) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
