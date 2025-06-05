@@ -3,6 +3,7 @@ function initCheckout() {
     let pasoActual = 1;
     const totalPasos = 4;
 
+<<<<<<< HEAD
     function validarPaso(n) {
 if (n === 1) {
     const nombres = $('#nombres').val().trim();
@@ -36,6 +37,127 @@ if (n === 1) {
         return false;
     }
 }
+=======
+    // ---------------------------------------------------
+    // 1) Definición DEL OBJETO “departamentos” ANTES DE USARLO
+    // ---------------------------------------------------
+    const departamentos = {
+        'Ahuachapán': ['Ahuachapán','Atiquizaya','Turín','El Refugio','Guaymango','Jujutla','San Francisco Menéndez','San Lorenzo','San Pedro Puxtla','Tacuba'],
+        'Cabañas': ['Sensuntepeque','Ilobasco','Cinquera','Guacotecti','Jutiapa','San Isidro','Tejutepeque','Victoria'],
+        'Chalatenango': ['Chalatenango','La Palma','Arcatao','Azacualpa','Cancasque','Citalá','Comalapa','Concepción Quezaltepeque','Dulce Nombre de María','El Carrizal','El Paraíso','La Laguna','Las Vueltas','Nombre de Jesús','Nueva Concepción','Ojos de Agua','Potonico','San Antonio de la Cruz','San Antonio Los Ranchos','San Fernando','San Francisco Lempa','San Ignacio','San Isidro Labrador','San Luis del Carmen','San Miguel de Mercedes','San Rafael','Santa Rita','Tejutla'],
+        'Cuscatlán': ['Cojutepeque','Suchitoto','Candelaria','El Carmen','El Rosario','Monte San Juan','Oratorio de Concepción','San Bartolomé Perulapía','San Cristóbal','San José Guayabal','San Pedro Perulapán','San Rafael Cedros','San Ramón','Santa Cruz Analquito','Santa Cruz Michapa','Tenancingo'],
+        'La Libertad': ['Santa Tecla','Antiguo Cuscatlán','Colón','Quezaltepeque','Zaragoza','Ciudad Arce','Huizúcar','Jayaque','Jicalapa','La Libertad','Nuevo Cuscatlán','San Juan Opico','San Matías','San Pablo Tacachico','Tamanique','Talnique','Teotepeque','Tepecoyo','Sacacoyo','Chiltiupán','Comasagua'],
+        'La Paz': ['Zacatecoluca','Olocuilta','San Juan Nonualco','San Luis Talpa','San Pedro Masahuat','San Rafael Obrajuelo','Santiago Nonualco','Tapalhuaca','Cuyultitán','Jerusalén','Mercedes La Ceiba','San Antonio Masahuat','San Emigdio','San Francisco Chinameca','San Juan Talpa','San Juan Tepezontes','San Miguel Tepezontes','San Pedro Nonualco','Santa María Ostuma'],
+        'La Unión': ['La Unión','Santa Rosa de Lima','Anamorós','Bolívar','Concepción de Oriente','Conchagua','El Carmen','Estanzuelas','Intipucá','Jucuarán','Lolotique','Meanguera del Golfo','Moncagua','Nueva Esparta','Pasaquina','Polorós','San Alejo','San Carlos','San Fernando','San Jorge','San José','San Juan','San Lorenzo','Santa Rosa','Yayantique','Yucuaiquín'],
+        'Morazán': ['San Francisco Gotera','Sociedad','Arambala','Cacaopera','Chilanga','Corinto','Delicias de Concepción','El Divisadero','El Rosario','Gualococti','Guatajiagua','Joateca','Jocoaitique','Jocoro','Lolotiquillo','Meanguera','Osicala','Perquín','San Carlos','San Fernando','San Isidro','San Simón','Sensembra','Yamabal','Yoloaiquín'],
+        'San Miguel': ['San Miguel','Chinameca','Ciudad Barrios','Comacarán','Chapeltique','El Carmen','Guatajiagua','Jocoro','Lolotique','Moncagua','Nueva Guadalupe','Quelepa','San Antonio del Mosco','San Gerardo','San Jorge','San Luis de la Reina','San Rafael Oriente','Sesori','Uluazapa'],
+        'San Salvador': ['San Salvador','Soyapango','Mejicanos','Ilopango','Apopa','Ayutuxtepeque','Cuscatancingo','Delgado','El Paisnal','Guazapa','Nejapa','Panchimalco','Rosario de Mora','San Marcos','San Martín','Santiago Texacuangos','Santo Tomás','Tonacatepeque','Aguilares'],
+        'San Vicente': ['San Vicente','Apastepeque','San Cayetano Istepeque','San Esteban Catarina','San Ildefonso','San Lorenzo','San Sebastián','Santa Clara','Santo Domingo','Tecoluca','Verapaz','Guadalupe'],
+        'Santa Ana': ['Santa Ana','Metapán','Chalchuapa','Coatepeque','El Congo','Candelaria de la Frontera','Texistepeque','Masahuat','San Antonio Pajonal','Santa Rosa Guachipilín','Santiago de la Frontera','El Porvenir','San Sebastián Salitrillo'],
+        'Sonsonate': ['Sonsonate','Izalco','Acajutla','Armenia','Caluco','Cuyultitán','Juayúa','Nahuizalco','Salcoatitán','San Antonio del Monte','San Julián','Santa Catarina Masahuat','Santa Isabel Ishuatán','Santo Domingo de Guzmán','Sonzacate'],
+        'Usulután': ['Usulután','Jiquilisco','Alegría','Berlín','Concepción Batres','Ereguayquín','Estanzuelas','Jucuapa','Mercedes Umaña','Nueva Granada','Ozatlán','Puerto El Triunfo','San Agustín','San Buenaventura','San Dionisio','San Francisco Javier','Santa Elena','Santa María','Santiago de María','Tecapán']
+    };
+
+    // ---------------------------------------------------
+    // 2) Funciones “cargarDepartamentos” y “cargarMunicipios”
+    // ---------------------------------------------------
+    function cargarDepartamentos() {
+        const $sel = $('#departamento')
+          .empty()
+          .append('<option value="">Seleccione departamento</option>');
+        $.each(departamentos, (dpto, lista) => {
+          $sel.append(`<option value="${dpto}">${dpto}</option>`);
+        });
+    }
+
+    function cargarMunicipios() {
+        const dpto = $('#departamento').val();
+        const $sel = $('#municipio')
+          .empty()
+          .append('<option value="">Seleccione municipio</option>');
+        (departamentos[dpto] || []).forEach(muni => {
+          $sel.append(`<option value="${muni}">${muni}</option>`);
+        });
+    }
+
+    // ---------------------------------------------------
+    // 3) Nueva función: prellenarDatosUsuario
+    // ---------------------------------------------------
+    function prellenarDatosUsuario() {
+        $.ajax({
+            url: 'app/models/usuarios/get_perfil.php',
+            method: 'GET',
+            dataType: 'json'
+        }).done(res => {
+            if (!res.ok) {
+                return; // Si no está logueado o hay error, no hacemos nada
+            }
+
+            // 3.1) Paso 1: Información personal
+            $('#nombres').val(res.usuario.nombre || '');
+            $('#apellidos').val(res.usuario.apellido || '');
+            $('#email').val(res.usuario.email || '');
+            $('#telefono').val(res.usuario.telefono || '');
+            // Si en tu tabla usuarios guardas habitualmente también el DUI, podrías hacer:
+            // $('#dui').val(res.usuario.dui || '');
+
+            // 3.2) Paso 2: Dirección
+            cargarDepartamentos(); // Primero llenamos el <select id="departamento">
+            if (res.direccion) {
+                const depto = res.direccion.departamento || '';
+                $('#departamento').val(depto);
+
+                // Luego cargamos municipios para ese departamento
+                cargarMunicipios();
+                const muni = res.direccion.ciudad || '';
+                $('#municipio').val(muni);
+
+                // Resto de la dirección (texto)
+                $('#direccionCompleta').val(res.direccion.direccion || '');
+            }
+        }).fail(() => {
+            // Si falla, simplemente no rellenamos nada
+        });
+    }
+
+    // ---------------------------------------------------
+    // 4) Resto de tu código original (validaciones, avanzar paso, finalizarCompra, etc.)
+    //    ¡No cambiar nada de aquí hacia abajo!
+    // ---------------------------------------------------
+    function validarPaso(n) {
+        if (n === 1) {
+            const nombres = $('#nombres').val().trim();
+            const apellidos = $('#apellidos').val().trim();
+            const email = $('#email').val().trim();
+            const dui = $('#dui').val().trim();
+            const telefono = $('#telefono').val().trim();
+
+            const duiRegex = /^\d{8}-\d$/; // Formato de DUI: 1234567-8
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const telefonoRegex = /^\d{8}$/;
+
+            if (!nombres) {
+                Swal.fire('Campo requerido', 'Por favor ingresa tus nombres', 'warning');
+                return false;
+            }
+            if (!apellidos) {
+                Swal.fire('Campo requerido', 'Por favor ingresa tus apellidos', 'warning'); 
+                return false;
+            }
+            if (!email || !emailRegex.test(email)) {
+                Swal.fire('Correo inválido', 'Ingresa un correo válido (ej. ejemplo@dominio.com)', 'warning');
+                return false;
+            }
+            if (!dui || !duiRegex.test(dui)) {
+                Swal.fire('DUI inválido', 'Ingresa el DUI en formato correcto (ej. 1234567-8)', 'warning');
+                return false;
+            }
+            if (!telefono || !telefonoRegex.test(telefono)) {
+                Swal.fire('Teléfono inválido', 'El número debe tener 8 dígitos', 'warning');
+                return false;
+            } 
+        }
+>>>>>>> 10c551a (Actualizacion)
 
         if (n === 2) {
             if (!$('#departamento').val() || !$('#municipio').val() || !$('#direccionCompleta').val().trim()) {
@@ -205,6 +327,7 @@ if (n === 1) {
         });
     };
 
+<<<<<<< HEAD
     // Carga de departamentos/municipios (sin cambios, solo por completitud)
     const departamentos = {
         'Ahuachapán': ['Ahuachapán', 'Atiquizaya', 'Turín', 'El Refugio', 'Guaymango', 'Jujutla', 'San Francisco Menéndez', 'San Lorenzo', 'San Pedro Puxtla', 'Tacuba'],
@@ -239,3 +362,15 @@ if (n === 1) {
     $('#departamento').on('change', cargarMunicipios);
     $('#barra-progreso').css('width', '0%').text(`Paso 1 de ${totalPasos}`);
 }
+=======
+    // ---------------------------------------------------
+    // 5) Inicialización al cargar el checkout
+    // ---------------------------------------------------
+    cargarDepartamentos();
+    $('#departamento').on('change', cargarMunicipios);
+    $('#barra-progreso').css('width', '0%').text(`Paso 1 de ${totalPasos}`);
+
+    // 6) AÑADIDO: Prellenar con los datos del usuario guardados en BD
+    prellenarDatosUsuario();
+}
+>>>>>>> 10c551a (Actualizacion)

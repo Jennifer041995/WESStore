@@ -1,0 +1,41 @@
+# Archivo: WESStore/.htaccess
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /WESStore/
+
+    # Si la solicitud NO es un archivo o directorio existente,
+    # y la URL es vacía (la raíz del proyecto /WESStore/)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    # Redirige la raíz a index.php?mod=home 
+    RewriteRule ^/?$ index.php?mod=home [QSA,L] 
+
+    # Regla para reescribir URLs amigables (como vehiculos, inicio, etc.)
+    # Esta regla va DESPUÉS de la anterior para que la raíz tenga prioridad
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([a-zA-Z0-9_/]+)/?$ index.php?mod=$1 [QSA,L]
+
+
+    # Opcional: Redireccionar .php a URLs sin extensión (EXCLUYENDO app/models/)
+    # Solo si quieres ocultar las extensiones .php para otros scripts (no es crítico para el éxito del login)
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\s([^.]+)\.php\sHTTP/ [NC]
+    # Asegúrate de que esta ruta sea correcta si la usas
+    RewriteCond %{REQUEST_URI} !^/WESStore/app/models/ [NC] 
+    RewriteRule ^ %1 [R=301,L]
+
+</IfModule>
+
+
+# Deshabilitar listado de directorios para mayor seguridad
+Options -Indexes
+
+# Configuración para archivos estáticos (CSS, JS, imágenes)
+<FilesMatch "\.(css|js|html|png|jpg|jpeg|gif|svg|ico|webp)$">
+    Header set Cache-Control "max-age=2592000, public"
+</FilesMatch>
+
+# Opcional: Forzar HTTPS (muy recomendado para producción)
+# RewriteCond %{HTTPS} off
+# RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

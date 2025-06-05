@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi Perfil</title>
+  <!-- Bootstrap 4.6 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 5.15.4 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <!-- SweetAlert2 -->
+  <link href="resources/sweetalert/sweetalert2.min.css" rel="stylesheet">
+<style>
+  body {
+    background: linear-gradient(135deg, #0f0f1a, #1f1f2e);
+    color: #e0e0e0;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .card {
+    background-color: #1c1c2e;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.15);
+  }
+
+  .card-header {
+    background-color: #0d6efd;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.4);
+  }
+
+  .btn-light {
+    background-color: #252540;
+    color: #fff;
+    border: 1px solid #444;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .btn-light:hover {
+    background-color: #0dcaf0;
+    color: #000;
+  }
+
+  dl dt {
+    color: #9dc1ff;
+    font-weight: 500;
+  }
+
+  dl dd {
+    color: #ffffff;
+  }
+
+  .modal-content {
+    background-color: #23233b;
+    color: #e0e0e0;
+    border-radius: 1rem;
+    border: 1px solid #2d2d50;
+  }
+
+  .modal-header {
+    border-bottom: 1px solid #444;
+    background-color: #1a1a2f;
+  }
+
+  .modal-footer {
+    border-top: 1px solid #444;
+  }
+
+  .form-control, .form-select {
+    background-color: #2e2e48;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 0.5rem;
+  }
+
+  .form-control::placeholder {
+    color: #aaa;
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 202, 240, 0.25);
+    border-color: #0dcaf0;
+    background-color: #2e2e48;
+    color: #fff;
+  }
+
+  .btn-primary {
+    background-color: #0dcaf0;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #0bbbe0;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    border: none;
+    color: #000;
+  }
+
+  .btn-warning:hover {
+    background-color: #ffca2c;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+  }
+
+  #alert-perfil {
+    font-size: 0.95rem;
+  }
+</style>
+
+
+</head>
+<body>
+  <div class="container mt-4">
+    <div class="card">
+      <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0"><i class="fas fa-user-circle"></i> Mi Perfil</h4>
+        <div>
+          <!-- Botones con ID para reenfocar -->
+          <button id="btnEditarInfo" class="btn btn-sm btn-light mr-2" data-toggle="modal" data-target="#modalEditPersonal">
+            <i class="fas fa-edit"></i> Editar Info
+          </button>
+          <button id="btnCambiarPassword" class="btn btn-sm btn-light mr-2" data-toggle="modal" data-target="#modalChangePassword">
+            <i class="fas fa-key"></i> Cambiar Contraseña
+          </button>
+          <button id="btnEditarUbicacion" class="btn btn-sm btn-light" data-toggle="modal" data-target="#modalEditAddress">
+            <i class="fas fa-map-marker-alt"></i> Editar Ubicación
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <!-- Datos Personales (sólo lectura) -->
+        <h5>Información Personal:</h5>
+        <dl class="row">
+          <dt class="col-sm-3">Nombre</dt>
+          <dd class="col-sm-9" id="display-nombre">Cargando...</dd>
+
+          <dt class="col-sm-3">Apellido</dt>
+          <dd class="col-sm-9" id="display-apellido">Cargando...</dd>
+
+          <dt class="col-sm-3">Correo Electrónico</dt>
+          <dd class="col-sm-9" id="display-email">Cargando...</dd>
+
+          <dt class="col-sm-3">Teléfono</dt>
+          <dd class="col-sm-9" id="display-telefono">Cargando...</dd>
+
+          <dt class="col-sm-3">Rol</dt>
+          <dd class="col-sm-9" id="display-rol">Cargando...</dd>
+
+          <dt class="col-sm-3">Último Login</dt>
+          <dd class="col-sm-9" id="display-ultimo-login">Cargando...</dd>
+        </dl>
+        <hr>
+
+        <!-- Dirección (sólo lectura) -->
+        <h5>Dirección Principal:</h5>
+        <dl class="row">
+          <dt class="col-sm-3">Alias</dt>
+          <dd class="col-sm-9" id="display-alias">Cargando...</dd>
+
+          <dt class="col-sm-3">Dirección</dt>
+          <dd class="col-sm-9" id="display-direccion">Cargando...</dd>
+
+          <dt class="col-sm-3">Ciudad</dt>
+          <dd class="col-sm-9" id="display-ciudad">Cargando...</dd>
+
+          <dt class="col-sm-3">Departamento</dt>
+          <dd class="col-sm-9" id="display-departamento">Cargando...</dd>
+
+          <dt class="col-sm-3">Código Postal</dt>
+          <dd class="col-sm-9" id="display-codigo_postal">Cargando...</dd>
+
+          <dt class="col-sm-3">País</dt>
+          <dd class="col-sm-9" id="display-pais">Cargando...</dd>
+        </dl>
+
+        <div id="alert-perfil" class="mt-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Modales ================= -->
+  
+  <!-- 2.1 Modal: Editar Información Personal -->
+  <div class="modal fade" id="modalEditPersonal" tabindex="-1" role="dialog" aria-labelledby="modalEditPersonalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <form id="form-perfil-modal">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditPersonalLabel">Editar Información Personal</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="modal-nombre">Nombre *</label>
+                <input type="text" class="form-control" id="modal-nombre" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="modal-apellido">Apellido</label>
+                <input type="text" class="form-control" id="modal-apellido">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="modal-email">Correo Electrónico *</label>
+                <input type="email" class="form-control" id="modal-email" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="modal-telefono">Teléfono</label>
+                <input type="tel" class="form-control" id="modal-telefono" pattern="^\d{8,15}$" title="Entre 8 y 15 dígitos">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.2 Modal: Cambiar Contraseña -->
+  <div class="modal fade" id="modalChangePassword" tabindex="-1" role="dialog" aria-labelledby="modalChangePasswordLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form id="form-password-modal">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalChangePasswordLabel">Cambiar Contraseña</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="modal-old-password">Contraseña Actual *</label>
+              <input type="password" class="form-control" id="modal-old-password" required>
+            </div>
+            <div class="form-group">
+              <label for="modal-new-password">Nueva Contraseña *</label>
+              <input type="password" class="form-control" id="modal-new-password" required>
+            </div>
+            <div class="form-group">
+              <label for="modal-confirm-password">Confirmar Nueva *</label>
+              <input type="password" class="form-control" id="modal-confirm-password" required>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-warning">Actualizar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2.3 Modal: Editar Ubicación (Dirección) -->
+  <div class="modal fade" id="modalEditAddress" tabindex="-1" role="dialog" aria-labelledby="modalEditAddressLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <form id="form-address-modal">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalEditAddressLabel"><i class="fas fa-map-marker-alt"></i> Editar Ubicación</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Alias y Dirección completa -->
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="modal-alias">Alias *</label>
+                <input type="text" class="form-control" id="modal-alias" placeholder="Casa, Trabajo..." required>
+              </div>
+              <div class="form-group col-md-8">
+                <label for="modal-direccion">Dirección Completa *</label>
+                <input type="text" class="form-control" id="modal-direccion" placeholder="Calle, número, colonia..." required>
+              </div>
+            </div>
+
+            <!-- DEPARTAMENTO y MUNICIPIO -->
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="modal-departamento">Departamento *</label>
+                <select id="modal-departamento" class="form-control" required>
+                  <option value="">Seleccione departamento</option>
+                  <!-- Se llenará dinámicamente -->
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="modal-municipio">Municipio *</label>
+                <select id="modal-municipio" class="form-control" required>
+                  <option value="">Seleccione municipio</option>
+                  <!-- Se llenará dinámicamente -->
+                </select>
+              </div>
+            </div>
+
+            <!-- Código Postal y País -->
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="modal-codigo_postal">Código Postal</label>
+                <input type="text" class="form-control" id="modal-codigo_postal">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="modal-pais">País</label>
+                <input type="text" class="form-control" id="modal-pais" value="El Salvador">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Scripts ================= -->
+  <script src="resources/jquery/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+  <script src="resources/sweetalert/sweetalert2.all.min.js"></script>
+  <script src="app/controllers/usuarios/perfil.js"></script>
+</body>
+</html>

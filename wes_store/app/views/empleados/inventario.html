@@ -1,0 +1,195 @@
+<!-- app/views/empleados/inventario.html -->
+
+<!-- 1) ESTILOS LOCALES: Sobreescribir fondos blancos y aplicar semitransparencia/neón -->
+<style>
+  /* CONTENEDOR PRINCIPAL: semitransparente + blur */
+  .inventory-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+    padding: 25px;
+    margin: 20px 0;
+    backdrop-filter: blur(4px);
+  }
+
+  /* CARD: fondo transparente y borde cian suave */
+  .inventory-card {
+    background: transparent;
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+    color: #e0e0e0;
+  }
+
+  /* HEADER DE CARD: fondo semitransparente + borde neón */
+  .inventory-card .card-header {
+    background: rgba(0, 0, 0, 0.7);
+    border-bottom: 2px solid #00ffff;
+    color: #00ffff;
+    font-weight: 600;
+    text-shadow: 0 0 5px #00ffff;
+  }
+
+  /* TÍTULO DENTRO DEL HEADER */
+  .inventory-card .card-header h5 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  /* FORMULARIO INLINE: inputs oscuros + bordes neón */
+  .inventory-card .form-inline .form-control {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    color: #e0e0e0;
+  }
+  .inventory-card .form-inline .form-control::placeholder {
+    color: rgba(224, 224, 224, 0.6);
+  }
+  .inventory-card .form-inline .form-control:focus {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: #00ffff;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.4);
+    color: #e0e0e0;
+  }
+
+  /* BOTONES: neón cian */
+  .inventory-card .btn {
+    border-radius: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease-in-out;
+  }
+  .inventory-card .btn-secondary {
+    background: transparent;
+    color: #00ffff;
+    border: 1px solid #00ffff;
+    box-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
+  }
+  .inventory-card .btn-secondary:hover {
+    background: #00ffff;
+    color: #000;
+    box-shadow: 0 0 10px #00ffff;
+  }
+  .inventory-card .btn-light {
+    background: transparent;
+    color: #e0e0e0;
+    border: 1px solid rgba(224, 224, 224, 0.3);
+    box-shadow: 0 0 5px rgba(224, 224, 224, 0.2);
+  }
+  .inventory-card .btn-light:hover {
+    background: rgba(224, 224, 224, 0.2);
+    color: #000;
+  }
+
+  /* TABLA: transparente + bordes/neón + texto claro */
+  .inventory-card .table-responsive {
+    overflow-x: auto;
+  }
+  #tbl-inventario-empleado {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  /* Cabecera de tabla: semitransparente cian tenue, texto claro */
+  #tbl-inventario-empleado thead th {
+    background: rgba(0, 255, 255, 0.1);
+    color: #e0e0e0;
+    font-weight: 600;
+    padding: 12px;
+    position: sticky;
+    top: 0;
+    border-bottom: 2px solid #00ffff;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+  /* Filas: alternar tonos semitransparentes sobre fondo oscuro */
+  #tbl-inventario-empleado tbody tr {
+    background: rgba(255, 255, 255, 0.02);
+    transition: background 0.2s ease;
+  }
+  #tbl-inventario-empleado tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.04);
+  }
+  #tbl-inventario-empleado tbody tr:hover {
+    background: rgba(0, 255, 255, 0.05);
+  }
+  /* Celdas: texto claro y bordes tenues */
+  #tbl-inventario-empleado td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    vertical-align: middle;
+    color: #e0e0e0;
+    font-size: 0.9rem;
+  }
+
+  /* SCROLLBAR personal */
+  .inventory-card .table-responsive::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+  .inventory-card .table-responsive::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+  .inventory-card .table-responsive::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+  }
+  .inventory-card .table-responsive::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+</style>
+
+<!-- 2) CONTENIDO: Inventario Actual -->
+<div class="inventory-container">
+  <div class="card inventory-card">
+    <!-- Header con neón cian -->
+    <div class="card-header">
+      <h5 class="mb-0">Inventario Actual (Solo Lectura)</h5>
+    </div>
+
+    <div class="card-body">
+      <!-- Formulario inline: filtro por SKU -->
+      <div class="form-inline mb-3">
+        <label for="inv_sku" class="mr-2" style="color: #e0e0e0; font-weight: 600;">
+          SKU:
+        </label>
+        <input
+          type="text"
+          id="inv_sku"
+          class="form-control mr-2"
+          placeholder="Filtrar por SKU"
+        />
+        <button id="btn-buscar-inv" class="btn btn-secondary">
+          Filtrar
+        </button>
+        <button id="btn-reset-inv" class="btn btn-light ml-2">
+          Limpiar
+        </button>
+      </div>
+
+      <!-- Tabla transparente con bordes/neón -->
+      <div class="table-responsive">
+        <table
+          class="table table-borderless mb-0"
+          id="tbl-inventario-empleado"
+        >
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Producto</th>
+              <th>SKU</th>
+              <th>Stock Actual</th>
+              <th>Stock Mínimo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Filas cargadas vía JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

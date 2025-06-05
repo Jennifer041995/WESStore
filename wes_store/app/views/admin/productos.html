@@ -1,0 +1,122 @@
+<div class="container-fluid">
+  <h4 class="mb-4">Gestión de Productos</h4>
+
+  <!-- Botón para añadir nuevo producto -->
+  <div class="mb-3">
+    <button id="btn-nuevo-producto" class="btn btn-primary">
+      <i class="fas fa-plus"></i> Nuevo Producto
+    </button>
+  </div>
+
+  <!-- Tabla de productos -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover" id="tbl-productos">
+      <thead class="thead-light">
+        <tr>
+          <th>ID</th>
+          <th>SKU</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Marca</th>
+          <th>Precio</th>
+          <th>Costo</th>
+          <th>Stock</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal: Agregar / Editar Producto -->
+<div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="productoModalLabel">Nuevo Producto</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="form-producto">
+        <div class="modal-body">
+          <input type="hidden" id="id_producto">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="sku">SKU</label>
+              <input type="text" class="form-control" id="sku" required>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="nombre">Nombre</label>
+              <input type="text" class="form-control" id="nombre" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="categoria">Categoría</label>
+              <select id="categoria" class="form-control" required>
+                <option value="">Seleccione...</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="subcategoria">Subcategoría</label>
+              <select id="subcategoria" class="form-control" required>
+                <option value="">Seleccione...</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="marca">Marca</label>
+              <select id="marca" class="form-control" required>
+                <option value="">Seleccione...</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="precio">Precio</label>
+              <input type="number" step="0.01" class="form-control" id="precio" required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="costo">Costo</label>
+              <input type="number" step="0.01" class="form-control" id="costo" required>
+            </div>
+            <div class="form-group col-md-4">
+              <label for="stock">Stock Inicial</label>
+              <input type="number" class="form-control" id="stock" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="descripcion_corta">Descripción Corta</label>
+            <textarea class="form-control" id="descripcion_corta" rows="2"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="descripcion_larga">Descripción Larga</label>
+            <textarea class="form-control" id="descripcion_larga" rows="3"></textarea>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="estado">Estado</label>
+              <select id="estado" class="form-control">
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <label for="destacado">Destacado</label>
+              <select id="destacado" class="form-control">
+                <option value="0">No</option>
+                <option value="1">Sí</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btn-guardar">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
